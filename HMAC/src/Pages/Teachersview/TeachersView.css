@@ -1,0 +1,62 @@
+.teacher-view-Left-container{
+    position: absolute;
+    top: 8rem;
+    left: 250px;
+    display: flex;
+  flex-direction: column; /* Arrange child elements vertically */
+  align-items: center; /* Center children horizontally */
+}
+
+.teacher-view {
+    /* position: absolute;
+    top: 8rem;
+    left: 250px; */
+    border-radius: 29px;
+    background-color: rgba(162, 159, 159, 0.15);
+    border: 1px solid var(--color-black);
+    box-sizing: border-box;
+    width: 400px;
+    height: 500px;
+}
+
+
+.button-container {
+    position: relative;
+    top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-button {
+    padding: 10px 20px;
+    margin: 0 10px;
+    /* Adjust the margin between buttons */
+    background-color: #3016ce;
+    /* Your button background color */
+    color: white;
+    border: none;
+
+    cursor: pointer;
+    font-size: 16px;
+    width: 175px;
+    height: 38px;
+    border-radius: var(--br-21xl);
+
+
+}
+
+.custom-button:hover {
+    background-color: #40179d;
+    /* Change the background color on hover */
+}
+
+
+.teacher-analysis{
+    position: absolute;
+  top: 8rem;
+  right: 250px;
+  background-color: rgba(162, 159, 159, 0.19);
+  width: 400px;
+  height: 500px;
+}
