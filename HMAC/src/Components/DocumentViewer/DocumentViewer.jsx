@@ -1,7 +1,6 @@
 import React from "react";
 import "./DocumentViewer.css";
 
-
 const DocumentViewer = ({ pdfUrl }) => {
   return (
     <div className="document-container">

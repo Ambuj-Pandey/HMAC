@@ -24,7 +24,7 @@ const Navbar = ({ goTo }) => {
             <a href="#">Contact</a>
           </li>
           <li className="listitem">
-            <a href="#">{ goTo }</a>
+            <a href="#">{goTo}</a>
           </li>
         </div>
       </nav>

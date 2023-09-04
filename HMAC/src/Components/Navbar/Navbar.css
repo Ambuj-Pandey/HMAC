@@ -73,7 +73,8 @@
 .text {
     padding: 3px 10px;
     background-color: #502abd;
-    color: white; /* color for signup text, chnage this, i tried: #CCCCCC, #FFD700, #F5F5F5, #FAEBD7 */
+    color: white;
+    /* color for signup text, chnage this, i tried: #CCCCCC, #FFD700, #F5F5F5, #FAEBD7 */
     padding: 10px 20px;
     border-radius: 5px;
     display: flex;

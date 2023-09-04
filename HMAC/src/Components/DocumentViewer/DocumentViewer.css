@@ -1,26 +1,24 @@
-/* DocumentViewer.css */
 .document-container {
-    display: flex; /* Use flexbox for centering */
-    justify-content: center; /* Horizontally center the content */
-    align-items: center; /* Vertically center the content */
-    position: absolute;
-    top: 50px;
-    left: 20px;   
-    width: 350px;
-    height: 400px;
-  }
-  
-  .document-frame {
-    width: 100%; /* Occupy the full width of the container */
-    height: 100%; /* Occupy the full height of the container */
-    overflow: hidden; /* Hide any overflow within the frame */
-    border: 3px solid #ccc; /* Add a thin border around the frame */
-  }
-  
-  iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-    border-radius: 3px;
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50px;
+  left: 20px;
+  width: 350px;
+  height: 400px;
+}
+
+.document-frame {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border: 3px solid #ccc;
+}
+
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 3px;
+}

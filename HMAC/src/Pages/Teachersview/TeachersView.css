@@ -4,9 +4,7 @@
     left: 250px;
     display: flex;
     flex-direction: column;
-    /* Arrange child elements vertically */
     align-items: center;
-    /* Center children horizontally */
 }
 
 .teacher-view {
@@ -30,9 +28,7 @@
 .custom-button {
     padding: 10px 20px;
     margin: 0 10px;
-    /* Adjust the margin between buttons */
     background-color: #3016ce;
-    /* Your button background color */
     color: white;
     border: none;
 
@@ -47,7 +43,6 @@
 
 .custom-button:hover {
     background-color: #40179d;
-    /* Change the background color on hover */
 }
 
 
@@ -60,7 +55,8 @@
     height: 500px;
 }
 
-.name-title, .desc-title {
+.name-title,
+.desc-title {
     position: absolute;
     top: 0;
     left: 20px;
@@ -68,11 +64,12 @@
     display: inline-block;
 }
 
-.desc-title{
+.desc-title {
     top: 100px;
 }
 
-.pdf-name-field, .pdf-desc-field {
+.pdf-name-field,
+.pdf-desc-field {
     border-radius: var(--br-21xl);
     background-color: white;
     width: 350px;
@@ -82,12 +79,13 @@
     left: 20px;
 }
 
-.pdf-desc-field{
+.pdf-desc-field {
     top: 150px;
     height: 120px;
 }
 
-.pdf-name-field span, .pdf-desc-field p {
+.pdf-name-field span,
+.pdf-desc-field p {
     position: absolute;
     top: 10px;
     left: 15px;
