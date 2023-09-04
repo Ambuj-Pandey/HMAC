@@ -1,16 +1,15 @@
-.teacher-view-Left-container{
+.teacher-view-Left-container {
     position: absolute;
     top: 8rem;
     left: 250px;
     display: flex;
-  flex-direction: column; /* Arrange child elements vertically */
-  align-items: center; /* Center children horizontally */
+    flex-direction: column;
+    /* Arrange child elements vertically */
+    align-items: center;
+    /* Center children horizontally */
 }
 
 .teacher-view {
-    /* position: absolute;
-    top: 8rem;
-    left: 250px; */
     border-radius: 29px;
     background-color: rgba(162, 159, 159, 0.15);
     border: 1px solid var(--color-black);
@@ -52,11 +51,47 @@
 }
 
 
-.teacher-analysis{
+.teacher-analysis {
     position: absolute;
-  top: 8rem;
-  right: 250px;
-  background-color: rgba(162, 159, 159, 0.19);
-  width: 400px;
-  height: 500px;
+    top: 8rem;
+    right: 250px;
+    background-color: rgba(162, 159, 159, 0.19);
+    width: 400px;
+    height: 500px;
+}
+
+.name-title, .desc-title {
+    position: absolute;
+    top: 0;
+    left: 20px;
+    font-weight: 300;
+    display: inline-block;
+}
+
+.desc-title{
+    top: 100px;
+}
+
+.pdf-name-field, .pdf-desc-field {
+    border-radius: var(--br-21xl);
+    background-color: white;
+    width: 350px;
+    height: 40px;
+    position: absolute;
+    top: 50px;
+    left: 20px;
+}
+
+.pdf-desc-field{
+    top: 150px;
+    height: 120px;
+}
+
+.pdf-name-field span, .pdf-desc-field p {
+    position: absolute;
+    top: 10px;
+    left: 15px;
+    font-weight: 300;
+    display: inline-block;
+
 }
