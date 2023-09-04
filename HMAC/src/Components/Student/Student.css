@@ -5,14 +5,25 @@
     height: 100vh;
   }
   
-  .fileUpload {
+  .container-inner {
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-start; 
+    width: 80%; 
+  }
+  
+  .file-upload {
+    height: 40%;
+    flex: 0.3;
     text-align: center;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
   }
-    
-
+  
+  .file-upload label img {
+    width: 300px;
+    height: 300px;
+  }
+  
   .custom-file-upload {
     display: inline-block;
     padding: 10px 20px;
@@ -24,12 +35,50 @@
     text-align: center;
   }
   
-
   #file-input {
     display: none;
   }
   
-
-  .file-upload {
+  .metaData {
+    height: 40%;
+    flex: 0.3;
+    margin-left: 20px; 
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 20px;
     text-align: center;
   }
+  
+  .metaData label {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .metaData input,
+  .metaData textarea {
+    width: 100%;
+    padding: 8px; 
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    box-sizing: border-box; 
+  }
+  
+
+  .metaData label[for="pdf-name"] {
+    text-align: center;
+  }
+  
+  .submit-button {
+    justify-content: center;
+    display: block;
+    margin-left: 250px;
+    margin-top: 10px; 
+    padding: 10px 20px;
+    background-color: #4CAF50; 
+    color: #fff;
+    border: none;
+    border-radius: 5px; 
+    cursor: pointer;
+  }
+
