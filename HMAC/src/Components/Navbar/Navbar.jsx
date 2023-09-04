@@ -2,7 +2,7 @@ import React from "react";
 import "./Navbar.css";
 import collegeLogo from "../../assets/college_logo.png";
 
-const Navbar = () => {
+const Navbar = ({ goTo }) => {
   return (
     <div className="header">
       <div className="logoDiv">
@@ -22,6 +22,9 @@ const Navbar = () => {
           </li>
           <li className="listitem">
             <a href="#">Contact</a>
+          </li>
+          <li className="listitem">
+            <a href="#">{ goTo }</a>
           </li>
         </div>
       </nav>

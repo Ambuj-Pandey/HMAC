@@ -1,13 +1,13 @@
 import { useState } from "react";
 import "./App.css";
-import Navbar from "./Components/Navbar/Navbar";
+import Student from "./Components/Student/Student";
 
 function App() {
 
 
   return (
     <>
-      <Navbar />
+      <Student />
     </>
   );
 }
