@@ -16,6 +16,7 @@
     0% {
         opacity: 0;
     }
+
     100% {
         opacity: 1;
     }
@@ -53,12 +54,14 @@
 
 .listitem a {
     text-decoration: none;
-    color: #CCCCCC;  /* color for list items, chnage this, i tried: #CCCCCC, #FFD700, #F5F5F5, #FAEBD7 */
+    color: #CCCCCC;
+    /* color for list items, chnage this, i tried: #CCCCCC, #FFD700, #F5F5F5, #FAEBD7 */
     font-weight: bold;
 }
 
 .listitem:hover a {
-    color: #FFD700; /* Change the text color on hover (gold/yellow) */
+    color: #FFD700;
+    /* Change the text color on hover */
 }
 
 .signUp {
@@ -70,7 +73,7 @@
 .text {
     padding: 3px 10px;
     background-color: #502abd;
-    color: white;   /* color for signup text, chnage this, i tried: #CCCCCC, #FFD700, #F5F5F5, #FAEBD7 */
+    color: white; /* color for signup text, chnage this, i tried: #CCCCCC, #FFD700, #F5F5F5, #FAEBD7 */
     padding: 10px 20px;
     border-radius: 5px;
     display: flex;
@@ -82,5 +85,5 @@
 }
 
 .signUp .text:hover {
-   color: #FFD700; /* Change the background color on hover (gold/yellow) */
+    color: #FFD700;
 }
