@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./SlidingIndicator.css"; 
+import "./AIGeneratedContent.css"; 
 
 const SlidingIndicator = () => {
   const [responseRate, setResponseRate] = useState(1); // Set an initial non-zero value
