@@ -153,6 +153,7 @@
   }
   .metaData textarea{
     min-width: 50vw;
+    max-width: 50vw;
   }
   }
   @media screen and (max-width: 400px) {
