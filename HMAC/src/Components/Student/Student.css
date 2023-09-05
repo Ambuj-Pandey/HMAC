@@ -104,6 +104,8 @@
 
   .metaData textarea{
     height: 60px;
+    max-height: 200px;
+    max-width: 300px;
   }
   
 
