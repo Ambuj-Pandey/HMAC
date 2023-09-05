@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./TeachersView.css";
 import documentUrl from "../../assets/lorem_pdf.pdf";
 
@@ -7,12 +7,18 @@ import DocumentViewer from "../../Components/DocumentViewer/DocumentViewer";
 import SlidingIndicator from "../../Components/AIGeneratedContent/AIGeneratedContent";
 import DuplicateDetection from "../../Components/DuplicateDetection/DuplicateDetection"; // Import the DuplicateDetection component
 
+import Aos from "aos";
+import "aos/dist/aos.css";
+
 const TeachersView = () => {
+  useEffect(() => {
+    Aos.init({duration: 3000});
+  }, []); 
   return (
     <>
       <Navbar goTo="Student's View"/>
 
-      <div className="teacher-view-Left-container">
+      <div data-aos='fade-right' className="teacher-view-Left-container">
         <div className="teacher-view">
           <DocumentViewer pdfUrl={documentUrl} />
         </div>
@@ -22,7 +28,7 @@ const TeachersView = () => {
         </div>
       </div>
 
-      <div className="teacher-view-Right-container">
+      <div data-aos='fade-left' className="teacher-view-Right-container">
         <div className="teacher-analysis">
           <h4 className="name-title">PDF Name</h4>
           <div className="pdf-name-field">
