@@ -13,8 +13,9 @@
   }
   
   .file-upload {
-    height: 40%;
-    flex: 0.3;
+    margin-right: 150px;
+    width: 300px;
+    height: 400px;
     text-align: center;
     padding: 20px;
   }
@@ -27,10 +28,10 @@
   .custom-file-upload {
     display: inline-block;
     padding: 10px 20px;
-    background-color: #b6b6b6;
+    background-color: #c4c2c2;
     color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 10px;
     cursor: pointer;
     text-align: center;
   }
@@ -38,10 +39,32 @@
   #file-input {
     display: none;
   }
+
+    
+  .submit-button {
+    width: 175px;
+    height: 38px;
+    border-radius: var(--br-21xl);
+    justify-content: center;
+    display: block;
+    margin-left: 85px;
+    margin-top: 30px; 
+    padding: 10px 20px;
+    background-color: #4CAF50; 
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+
+  .submit-button:hover {
+    background-color: #083b0a;
+}
+
   
   .metaData {
-    height: 40%;
-    flex: 0.3;
+    background-color: rgba(162, 159, 159, 0.19);
+    width: 300px;
+    height: 400px;
     margin-left: 20px; 
     border: 1px solid #ccc;
     border-radius: 10px;
@@ -56,29 +79,20 @@
   
   .metaData input,
   .metaData textarea {
+    border-radius: var(--br-21xl);
+    background-color: white;
     width: 100%;
     padding: 8px; 
     border: 1px solid #ccc;
-    border-radius: 5px;
     margin-bottom: 15px;
     box-sizing: border-box; 
+  }
+
+  .metaData textarea{
+    height: 60px;
   }
   
 
   .metaData label[for="pdf-name"] {
     text-align: center;
   }
-  
-  .submit-button {
-    justify-content: center;
-    display: block;
-    margin-left: 250px;
-    margin-top: 10px; 
-    padding: 10px 20px;
-    background-color: #4CAF50; 
-    color: #fff;
-    border: none;
-    border-radius: 5px; 
-    cursor: pointer;
-  }
-
