@@ -27,8 +27,8 @@ const LoginPage = () => {
             required
           />
 
-          <button class="submitbutton">login</button>
-          <p class="message">
+          <button className="submitbutton">login</button>
+          <p className="message">
             Not registered? <Link to="/register">Create an account</Link>
           </p>
         </form>
