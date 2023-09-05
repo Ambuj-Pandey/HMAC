@@ -5,6 +5,7 @@ import documentUrl from "../../assets/lorem_pdf.pdf";
 import Navbar from "../../Components/Navbar/Navbar";
 import DocumentViewer from "../../Components/DocumentViewer/DocumentViewer";
 import SlidingIndicator from "../../Components/SlidingIndicator/SlidingIndicator";
+import DuplicateDetection from "../../Components/DuplicateDetection/DuplicateDetection"; // Import the DuplicateDetection component
 
 const TeachersView = () => {
   return (
@@ -40,7 +41,7 @@ const TeachersView = () => {
 
           <SlidingIndicator />
 
-
+          <DuplicateDetection />
         </div>
       </div>
 

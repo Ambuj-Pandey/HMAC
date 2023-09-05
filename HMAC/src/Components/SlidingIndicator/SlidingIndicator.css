@@ -1,7 +1,7 @@
 .sliding-indicator-container {
     position: relative;
     left: 20px;
-    top: 300px;
+    top: 290px;
     display: flex;
     flex-direction: column;
     width: 450px;
@@ -10,16 +10,17 @@
 
 .sliding-indicator-container .text {
     position: relative;
-    top: 0;
+    top: 5px;
     left: -20px;
     font-weight: 300;
+    font-size: 16px;
     display: inline-block;
     width: 150px;
     background: none;
     color: black;
 }
 
-.progress-bar {
+.sliding-indicator-container .progress-bar {
     width: 100%;
     max-width: 350px;
     /* Adjust as needed */
@@ -29,7 +30,7 @@
     position: relative;
 }
 
-.progress {
+.sliding-indicator-container .progress {
     height: 20px;
     background-color: #43A047;
     /* Color for the filled part of the progress bar */
@@ -40,11 +41,11 @@
     transition: width 2s ease;
 }
 
-.progress.animate {
+.sliding-indicator-container .progress.animate {
     width: 100%;
 }
 
-.percent-text {
+.sliding-indicator-container .percent-text {
     color: white;
     margin-left: 10px;
 }

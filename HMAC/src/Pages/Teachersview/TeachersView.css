@@ -45,11 +45,16 @@
     background-color: #40179d;
 }
 
-
-.teacher-analysis {
+.teacher-view-Right-container{
     position: absolute;
     top: 8rem;
     right: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.teacher-analysis {
     background-color: rgba(162, 159, 159, 0.19);
     width: 400px;
     height: 500px;
