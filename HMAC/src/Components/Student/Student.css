@@ -30,7 +30,7 @@
     padding: 10px 20px;
     background-color: #c4c2c2;
     color: #fff;
-    border: none;
+    border: 2px dashed red;
     border-radius: 10px;
     cursor: pointer;
     text-align: center;
@@ -72,6 +72,20 @@
     text-align: center;
   }
   
+  .invalid-input {
+    border-color: #ff0000; 
+    background-color: #ffe0e0;
+    color: #ff0000; 
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease; 
+  }
+
+  .error-message {
+    color: #ff0000;
+    margin-top: -10px;
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+
   .metaData label {
     display: block;
     margin-bottom: 10px;
