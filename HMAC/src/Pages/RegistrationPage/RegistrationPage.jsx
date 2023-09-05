@@ -1,5 +1,7 @@
 import React from "react";
 import "./RegistrationPage.css";
+import InputWithLabel from "../../Components/InputWithLabel/InputWithLabel";
+
 import { Link } from "react-router-dom";
 
 const RegistrationPage = () => {
@@ -7,26 +9,40 @@ const RegistrationPage = () => {
     <div className="registration-container">
       <div className="registration-box">
         <h2>Register</h2>
+
         <form>
-          <div className="inputBox">
-            <input type="text" required="required" />
-            <span>Full Name</span>
-          </div>
 
-          <div className="inputBox">
-            <input type="text" required="required" />
-            <span>Email</span>
-          </div>
+          <InputWithLabel
+            type="text"
+            id="fullName"
+            name="fullName"
+            label="Full Name"
+            required
+          />
 
-          <div className="inputBox">
-            <input type="password" required="required" />
-            <span>Password</span>
-          </div>
+          <InputWithLabel
+            type="text"
+            id="email"
+            name="email"
+            label="Email"
+            required
+          />
 
-          <div className="inputBox">
-            <input type="password" required="required" />
-            <span>Confirm Password</span>
-          </div>
+          <InputWithLabel
+            type="password"
+            id="password"
+            name="password"
+            label="Password"
+            required
+          />
+          
+          <InputWithLabel
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            label="Confirm Password"
+            required
+          />
 
           <button className="submitbutton">Register</button>
           <p className="message">

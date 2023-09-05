@@ -1,7 +1,8 @@
 import React from "react";
 import "./LoginPage.css";
+import InputWithLabel from "../../Components/InputWithLabel/InputWithLabel";
 
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   return (
@@ -9,19 +10,27 @@ const LoginPage = () => {
       <div className="login-box">
         <h2>Login</h2>
         <form>
-        <div class="inputBox">
-            <input type="text" required="required"/>
-            <span>Email</span>
-          </div>
+
+          <InputWithLabel
+            type="text"
+            id="email"
+            name="email"
+            label="Email"
+            required
+          />
           
-          <div class="inputBox">
-            <input type="password" required="required"/>
-            <span>Password</span>
-          </div>
+          <InputWithLabel
+            type="password"
+            id="password"
+            name="password"
+            label="Password"
+            required
+          />
 
           <button class="submitbutton">login</button>
-          <p class="message">Not registered? <Link to="/register">Create an account</Link></p>
-          
+          <p class="message">
+            Not registered? <Link to="/register">Create an account</Link>
+          </p>
         </form>
       </div>
     </div>
