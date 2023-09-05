@@ -10,7 +10,7 @@ import DuplicateDetection from "../../Components/DuplicateDetection/DuplicateDet
 const TeachersView = () => {
   return (
     <>
-      <Navbar />
+      <Navbar goTo="Student's View"/>
 
       <div className="teacher-view-Left-container">
         <div className="teacher-view">
