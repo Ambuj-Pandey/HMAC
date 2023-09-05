@@ -4,11 +4,13 @@ import documentUrl from "../../assets/lorem_pdf.pdf";
 
 import Navbar from "../../Components/Navbar/Navbar";
 import DocumentViewer from "../../Components/DocumentViewer/DocumentViewer";
+import SlidingIndicator from "../../Components/SlidingIndicator/SlidingIndicator";
 
 const TeachersView = () => {
   return (
     <>
-    <Navbar/>
+      <Navbar />
+      
       <div className="teacher-view-Left-container">
         <div className="teacher-view">
           <DocumentViewer pdfUrl={documentUrl} />
@@ -35,8 +37,13 @@ const TeachersView = () => {
               ever since the 1500s.{" "}
             </p>
           </div>
+
+          <SlidingIndicator />
+
+
         </div>
       </div>
+
     </>
   );
 };

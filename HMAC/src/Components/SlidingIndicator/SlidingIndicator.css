@@ -1,0 +1,51 @@
+.sliding-indicator-container {
+    position: relative;
+    left: 20px;
+    top: 300px;
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+    /* align-items: center; */
+}
+
+.sliding-indicator-container .text {
+    position: relative;
+    top: 0;
+    left: -20px;
+    font-weight: 300;
+    display: inline-block;
+    width: 150px;
+    background: none;
+    color: black;
+}
+
+.progress-bar {
+    width: 100%;
+    max-width: 350px;
+    /* Adjust as needed */
+    background-color: #ccc;
+    border-radius: var(--br-21xl);
+    overflow: hidden;
+    position: relative;
+}
+
+.progress {
+    height: 20px;
+    background-color: #43A047;
+    /* Color for the filled part of the progress bar */
+    /* transition: width 0.3s ease; */
+    display: flex;
+    align-items: center;
+    width: 0;
+    transition: width 2s ease;
+}
+
+.progress.animate {
+    width: 100%;
+}
+
+.percent-text {
+    color: white;
+    margin-left: 10px;
+}
+
