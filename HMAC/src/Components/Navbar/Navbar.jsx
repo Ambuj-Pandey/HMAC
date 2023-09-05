@@ -1,6 +1,7 @@
 import React from "react";
 import "./Navbar.css";
 import collegeLogo from "../../assets/college_logo.png";
+import { Link } from "react-router-dom";
 
 const Navbar = ({ goTo }) => {
   return (
@@ -24,7 +25,9 @@ const Navbar = ({ goTo }) => {
             <a href="#">Contact</a>
           </li>
           <li className="listitem">
-            <a href="#">{goTo}</a>
+            {goTo === "Professor View" 
+            ?<Link to = "/teachersview">{ goTo }</Link>
+            :<Link to = "/student">{ goTo }</Link>} 
           </li>
         </div>
       </nav>
