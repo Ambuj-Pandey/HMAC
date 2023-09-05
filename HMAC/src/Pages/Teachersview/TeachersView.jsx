@@ -11,7 +11,7 @@ const TeachersView = () => {
   return (
     <>
       <Navbar />
-      
+
       <div className="teacher-view-Left-container">
         <div className="teacher-view">
           <DocumentViewer pdfUrl={documentUrl} />
@@ -44,7 +44,6 @@ const TeachersView = () => {
           <DuplicateDetection />
         </div>
       </div>
-
     </>
   );
 };

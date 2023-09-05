@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./SlidingIndicator.css"; // Create or import a CSS file for styling
+import "./SlidingIndicator.css"; 
 
 const SlidingIndicator = () => {
   const [responseRate, setResponseRate] = useState(1); // Set an initial non-zero value
@@ -13,6 +13,7 @@ const SlidingIndicator = () => {
     // Set the initial random value when the component mounts
     setResponseRate(getRandomInitialValue());
   }, []); // Empty dependency array to run this effect only once
+  
   const animationWidth = `${Math.min(responseRate, 100)}%`;
 
   const progressBarColor = () => {

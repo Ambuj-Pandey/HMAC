@@ -31,14 +31,11 @@
     background-color: #3016ce;
     color: white;
     border: none;
-
     cursor: pointer;
     font-size: 16px;
     width: 175px;
     height: 38px;
     border-radius: var(--br-21xl);
-
-
 }
 
 .custom-button:hover {
