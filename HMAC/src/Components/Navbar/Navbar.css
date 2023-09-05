@@ -41,21 +41,25 @@
 
 .menu {
     list-style-type: none;
-    margin: 0;
+    margin: 0 ;
     padding: 0;
     display: flex;
-    align-items: center;
+    position: relative;
+    margin-left: 10vw;
+    text-align: center;
+    justify-content: center;
+    
 }
 
 .listitem {
-    margin: 0 20px;
+    margin: 0 4px;
     padding: .3rem 1rem;
 }
 
 
 .listitem a {
     text-decoration: none;
-    color: #CCCCCC;
+    color: #ffffff;
     /* color for list items, chnage this, i tried: #CCCCCC, #FFD700, #F5F5F5, #FAEBD7 */
     font-weight: bold;
 }
@@ -66,26 +70,114 @@
 }
 
 .signUp {
-    gap: .5rem;
-    position: relative;
-    right: 10rem;
+    /* gap: .5rem; */
+    margin-right:80px ;
+
+    
 }
 
 .text {
+    
     padding: 3px 10px;
-    background-color: #502abd;
+    background-color: #280e6b;
     color: white;
     /* color for signup text, chnage this, i tried: #CCCCCC, #FFD700, #F5F5F5, #FAEBD7 */
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s ease-in-out;
+    
 
 }
 
 .signUp .text:hover {
     color: #FFD700;
+}
+
+
+
+
+
+
+
+
+
+
+
+/* Navbar.css */
+
+/* Hamburger menu styles */
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+  }
+  
+  .bar {
+    width: 25px;
+    height: 3px;
+    margin: 3px 0;
+    background-color: #ffffff;
+    transition: all 0.3s ease;
+  }
+  
+  .bar.active {
+    background-color: #5b5b5b;
+  }
+  
+  /* Media query for responsive design */
+  @media (max-width: 768px) {
+    .header{
+        display: flex;
+        justify-content:flex-end;
+        
+        
+    }
+    .hamburger {
+        
+      display: flex;
+      margin: 0;
+      margin-top: -5px;
+      margin-left: 40vw;
+      margin-right: 5vw;
+
+    }
+  
+    .navbar {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      position: absolute;
+      width: 100%;
+      margin-left: -32px;
+      margin-top: 30vh;
+      background-color: #1f1f1fb1;
+      transition: all 0.3s ease;
+    }
+  
+    .navbar.open {
+      display: flex;
+      
+    }
+  
+    .menu{
+        flex-direction: column;
+margin: 0;
+margin-left: -15vw;        
+    }
+  }
+  @media (max-width: 420px) {
+  
+    .hamburger {
+        
+        display: flex;
+        margin: 0;
+        margin-top: -5px;
+        margin-left: 20vw;
+        margin-right: 5vw;
+  
+      }
 }

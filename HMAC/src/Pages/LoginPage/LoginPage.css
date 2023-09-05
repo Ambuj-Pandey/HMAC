@@ -36,7 +36,7 @@ h2 {
   background: white;
   border-radius: 5px;
   outline: none;
-  color: #fff;
+  color: #000000;
   font-size: 1em;
   transition: 0.5s;
 }
@@ -106,4 +106,19 @@ h2 {
 
 .message Link:hover {
   text-decoration: underline;
+}
+@media screen and (max-width: 720px) {
+.login-box{
+  height: 40vh;
+  width: 40vw;
+  min-height: 35vh;
+  min-width: 190px;
+}
+.inputBox {
+  position: relative;
+  width: 36vw;
+  min-width: 165px;
+  margin-top: 10%;
+}
+  
 }

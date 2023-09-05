@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import {useEffect} from "react";
 import "./TeachersView.css";
 import documentUrl from "../../assets/lorem_pdf.pdf";
 
