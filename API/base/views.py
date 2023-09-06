@@ -3,16 +3,15 @@ from django.http import JsonResponse
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
+from rest_framework.authentication import SessionAuthentication
+from django.contrib.auth import login, logout
+
 # import models
-from django.contrib.auth.models import User
+from .models import User
 
 # import serializers
 from .serializers import UserSerializer
 # Create your views here.
-
-# superuser credentials
-# Username: a
-# Password: a
 
 def data(request):
     return HttpResponse("Hello World")
