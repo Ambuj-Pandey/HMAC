@@ -45,10 +45,10 @@ const Navbar = ({ goTo }) => {
             <a href="#">Contact</a>
           </li>
           <li className="listitem">
-            {goTo === "Professor View" ? (
-              <Link to="/teachersview">{goTo}</Link>
+            {goTo === "Professor" ? (
+              <Link to="/Professor">{goTo}</Link>
             ) : (
-              <Link to="/student">{goTo}</Link>
+              <Link to="/Student">{goTo}</Link>
             )}
           </li>
         </div>

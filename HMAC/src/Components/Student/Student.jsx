@@ -25,7 +25,7 @@ const Student = () => {
 
   return (
     <>
-      <Navbar goTo={'Professor View'} />
+      <Navbar goTo={'Professor'} />
       <div className="container">
         <div className="file-upload">
           <label htmlFor="file-input" className="custom-file-upload">

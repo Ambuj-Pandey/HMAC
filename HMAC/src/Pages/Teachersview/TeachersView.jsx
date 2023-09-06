@@ -16,7 +16,7 @@ const TeachersView = () => {
   }, []); 
   return (
     <>
-      <Navbar goTo="Student's View"/>
+      <Navbar goTo="Student"/>
 
       <div data-aos='fade-right' className="teacher-view-Left-container">
         <div className="teacher-view">
