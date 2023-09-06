@@ -32,7 +32,7 @@ const LoginPage = () => {
   //     { headers: { "Content-Type": "application/json" } },
   //     { withCredentials: true }
   //   );
-
+      
   //   // Initialize the access & refresh token in localstorage.
   //   localStorage.clear();
   //   localStorage.setItem("access_token", data.access);
@@ -45,9 +45,7 @@ const LoginPage = () => {
     <div className="login-container">
       <div className="login-box">
         <h2>Login</h2>
-        <form 
-        // onSubmit={submit}
-        >
+        <form onSubmit={submit}>
           {/* <InputWithLabel
             type="text"
             id="email"
@@ -70,7 +68,7 @@ const LoginPage = () => {
               name="email"
               required
               value={Email}
-              // onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
             <span>Email</span>
           </div>
@@ -81,7 +79,7 @@ const LoginPage = () => {
               name="password"
               required
               value={password}
-              // onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
             />
             <span>Password</span>
           </div>
