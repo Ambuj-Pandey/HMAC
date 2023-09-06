@@ -42,20 +42,22 @@ INSTALLED_APPS = [
 
     'rest_framework',
 
-    "corsheaders",
-    
+    'corsheaders',
+
+    'rest_framework_simplejwt',
+
     'rest_framework_simplejwt.token_blacklist'
 ]
 
 MIDDLEWARE = [
-   
+
 
     'django.middleware.security.SecurityMiddleware',
 
-     "corsheaders.middleware.CorsMiddleware",
-     
+    'corsheaders.middleware.CorsMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
-    
+
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -64,16 +66,17 @@ MIDDLEWARE = [
 ]
 
 REST_FRAMEWORK = {
-     'DEFAULT_AUTHENTICATION_CLASSES': [
+    'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-      ],
+    ],
 }
 
 SIMPLE_JWT = {
-     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
-     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-     'ROTATE_REFRESH_TOKENS': True,
-     'BLACKLIST_AFTER_ROTATION': True
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # Set the token expiration time as needed.
+    'SLIDING_TOKEN_REFRESH_LIFETIME': timedelta(days=1),
+    'SLIDING_TOKEN_LIFETIME': timedelta(days=30),
+    'SLIDING_TOKEN_REFRESH_LIFETIME_GRACE_PERIOD': timedelta(days=7),
+    'SLIDING_TOKEN_LIFETIME_GRACE_PERIOD': timedelta(days=7),
 }
 
 ROOT_URLCONF = 'API.urls'
@@ -152,6 +155,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # our USer model
 AUTH_USER_MODEL = 'base.User'
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
 
-CORS_ALLOW_CREDENTIALS: True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",  # Replace with the actual origin of your React app
+]
+
+CORS_ALLOW_CREDENTIALS = True

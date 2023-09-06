@@ -3,11 +3,12 @@ from rest_framework.decorators import api_view
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.authentication import SessionAuthentication
-from django.contrib.auth import login, logout
-
+from django.contrib.auth import logout
+from rest_framework_simplejwt.tokens import RefreshToken
 # import models
 from .models import User
 
@@ -15,14 +16,33 @@ from .models import User
 from .serializers import UserSerializer
 # Create your views here.
 
-class HomeView(APIView):
-     
-    permission_classes = (IsAuthenticated, )
+from django.contrib.auth import authenticate, login
 
-    def get(self, request):
-        content = {'message': 'Welcome to the JWT Authentication page using React Js and Django!'}
 
-        return Response(content)
+@api_view(['POST'])
+def login_view(request):
+    email = request.data.get('email')
+    password = request.data.get('password')
+    
+    user = authenticate(request, email=email, password=password)
+    print(user)
+    if user is not None:
+        login(request, user)
+        refresh = RefreshToken.for_user(user)
+        access_token = str(refresh.access_token)
+        refresh_token = str(refresh)
+        
+        # Return tokens in the response
+        response = Response({
+            "access_token": access_token,
+            "refresh_token": refresh_token,
+        })
+        response["Access-Control-Allow-Credentials"] = "true"
+        return response
+    else:
+        return Response({"error": "Login failed"}, status=400)
+    
+
 
 
 # class LogoutView(APIView):

@@ -29,7 +29,7 @@ class UserLoginSerializer(ModelSerializer):
 
     def validate(self, clean_data):
         user = authenticate(
-            email=clean_data['email'],
+            email=clean_data['Email'],
             password=clean_data['password']
         )
         if user is None:

@@ -6,46 +6,98 @@ import InputWithLabel from "../../Components/InputWithLabel/InputWithLabel";
 import { Link } from "react-router-dom";
 
 const LoginPage = () => {
-  const [Email, setEmail] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  useEffect(() => {
-    users();
-  }, []);
+  // useEffect(() => {
+  //   users();
+  // }, []);
 
-  let users = async () => {
-    let response = await fetch("http://127.0.0.1:8000")
-    let data = await response.json()
-    console.log(data)
-  }
-
-  // const submit = async (e) => {
-  //   e.preventDefault();
-  //   const user = {
-  //     Email: Email,
-  //     password: password,
-  //   };
-  //   // Create the POST requuest
-  //   const { data } = await axios.post(
-  //     "http://127.0.0.1:8000/token/",
-  //     user,
-  //     { headers: { "Content-Type": "application/json" } },
-  //     { withCredentials: true }
-  //   );
-      
-  //   // Initialize the access & refresh token in localstorage.
-  //   localStorage.clear();
-  //   localStorage.setItem("access_token", data.access);
-  //   localStorage.setItem("refresh_token", data.refresh);
-  //   axios.defaults.headers.common["Authorization"] = `Bearer ${data["access"]}`;
-  //   window.location.href = "/";
+  // let users = async () => {
+  //   let response = await fetch("http://127.0.0.1:8000");
+  //   let data = await response.json();
+  //   console.log(data);
   // };
 
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+
+  //   const user = {
+  //     email: email,
+  //     password: password,
+  //   };
+
+  //   const requestOptions = {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     credentials: "include", // Send credentials with the request
+  //     body: JSON.stringify(user),
+  //   };
+
+  //   try {
+  //     const response = await fetch(
+  //       "http://127.0.0.1:8000/login/",
+  //       requestOptions
+  //     );
+
+  //     if (response.ok) {
+  //       // Handle a successful login here
+  //       const data = await response.json();
+  //       localStorage.setItem("access_token", data.access);
+  //       localStorage.setItem("refresh_token", data.refresh);
+  //       // Redirect or perform any other actions upon successful login
+  //       window.location.href = "/";
+  //     } else {
+  //       // Handle errors or invalid login credentials here
+  //       console.error("Login failed:", response.statusText);
+  //     }
+  //   } catch (error) {
+  //     // Handle network errors here
+  //     console.error("Network error:", error);
+  //   }
+  // };
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    const user = {
+      email: email,
+      password: password,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/login/",
+        user,
+        { withCredentials: true } // Include credentials
+      );
+
+      if (response.status === 200) {
+        const data = response.data;
+        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("refresh_token", data.refresh_token);
+        console.log(data);
+        console.log(data.access_token);
+        // Redirect or perform any other actions upon successful login
+        // window.location.href = "/";   ---> this reloads which we dont want
+      } else {
+        // Handle errors or invalid login credentials here
+        console.error("Login failed:", response.statusText);
+      }
+    } catch (error) {
+      // Handle network errors here
+      console.error("Network error:", error);
+    }
+  };
+
+  
   return (
     <div className="login-container">
       <div className="login-box">
         <h2>Login</h2>
-        <form onSubmit={submit}>
+        <form onSubmit={handleLogin}>
           {/* <InputWithLabel
             type="text"
             id="email"
@@ -55,7 +107,7 @@ const LoginPage = () => {
           />
           
           <InputWithLabel
-            type="password"
+            type="Password"
             id="password"
             name="password"
             label="Password"
@@ -67,7 +119,7 @@ const LoginPage = () => {
               type="text"
               name="email"
               required
-              value={Email}
+              value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
             <span>Email</span>
