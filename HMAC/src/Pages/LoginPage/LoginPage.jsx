@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./LoginPage.css";
-import InputWithLabel from "../../Components/InputWithLabel/InputWithLabel";
 
 import { Link } from "react-router-dom";
+
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -78,42 +78,32 @@ const LoginPage = () => {
         const data = response.data;
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("refresh_token", data.refresh_token);
-        console.log(data);
+        
         console.log(data.access_token);
+
+        if (data.is_staff == true) {
+          // Redirect staff users to a staff page
+          window.location.href = "/Professor"; 
+          // Change the URL to the staff page
+        } else {
+          // Redirect regular users to a different page
+          window.location.href = "/Student"; 
+        }
         // Redirect or perform any other actions upon successful login
         // window.location.href = "/";   ---> this reloads which we dont want
       } else {
-        // Handle errors or invalid login credentials here
         console.error("Login failed:", response.statusText);
       }
     } catch (error) {
-      // Handle network errors here
       console.error("Network error:", error);
     }
   };
 
-  
   return (
     <div className="login-container">
       <div className="login-box">
         <h2>Login</h2>
         <form onSubmit={handleLogin}>
-          {/* <InputWithLabel
-            type="text"
-            id="email"
-            name="email"
-            label="Email"
-            required
-          />
-          
-          <InputWithLabel
-            type="Password"
-            id="password"
-            name="password"
-            label="Password"
-            required
-          /> */}
-
           <div className="inputBox">
             <input
               type="text"

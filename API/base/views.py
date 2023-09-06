@@ -25,7 +25,7 @@ def login_view(request):
     password = request.data.get('password')
     
     user = authenticate(request, email=email, password=password)
-    print(user)
+    print(user.is_staff)
     if user is not None:
         login(request, user)
         refresh = RefreshToken.for_user(user)
@@ -33,10 +33,13 @@ def login_view(request):
         refresh_token = str(refresh)
         
         # Return tokens in the response
-        response = Response({
+        response_data = {
             "access_token": access_token,
             "refresh_token": refresh_token,
-        })
+            "is_staff": user.is_staff,  # Include the is_staff value
+        }
+
+        response = Response(response_data)
         response["Access-Control-Allow-Credentials"] = "true"
         return response
     else:
