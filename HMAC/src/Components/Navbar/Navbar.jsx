@@ -1,9 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Navbar.css";
 import collegeLogo from "../../assets/college_logo.png";
 import { Link } from "react-router-dom";
 
 const Navbar = ({ goTo }) => {
+  const [isAuth, setIsAuth] = useState(false);
+
+  useEffect(() => {
+    if (localStorage.getItem("access_token") !== null) {
+      setIsAuth(true);
+    }
+  }, [isAuth]);
+
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -46,7 +54,11 @@ const Navbar = ({ goTo }) => {
         </div>
       </nav>
       <div className="signUp">
-        <div className="text">Sign Up</div>
+        {isAuth ? (
+          <div className="text"> Sign Up </div>
+        ) : (
+          <div className="text">Logout </div>
+        )}
       </div>
     </div>
   );
