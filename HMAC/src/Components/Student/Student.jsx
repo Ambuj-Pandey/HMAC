@@ -27,11 +27,14 @@ const Student = () => {
   };
 
   const handleUpload = () => {
-    axios.post('http://127.0.0.1:8000/Upload/', {
-      selectedFile : selectedFile,
-      desc : desc,
-      file: file
-    })
+    e.preventDefault();
+    
+    const formData = new FormData();
+    formData.append('selectedFile', selectedFile);
+    formData.append('desc', desc);
+    formData.append('file', file);
+
+    axios.post('http://127.0.0.1:8000/Upload/', formData)
     .then(() => {
         console.log('File uploaded successfully');
     })
