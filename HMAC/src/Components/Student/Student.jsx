@@ -45,7 +45,7 @@ const Student = () => {
 
   return (
     <>
-      <Navbar goTo={'Professor'} />
+      <Navbar goTo={'Professor'} toggleSummary={"false"}/>
       <div className="container">
         <div className="file-upload">
           <label htmlFor="file-input" className="custom-file-upload">

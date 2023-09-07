@@ -4,7 +4,7 @@ import collegeLogo from "../../assets/college_logo.png";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-const Navbar = ({ goTo }) => {
+const Navbar = ({ goTo, toggleSummary = "false" }) => {
   const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
@@ -24,7 +24,7 @@ const Navbar = ({ goTo }) => {
     // Clear the authentication tokens from local storage
     localStorage.removeItem("access_token");
     localStorage.removeItem("refresh_token");
-    
+
     // Update the isAuth state to false
     setIsAuth(false);
 
@@ -65,11 +65,20 @@ const Navbar = ({ goTo }) => {
               <Link to="/Student">{goTo}</Link>
             )}
           </li>
+
+          {toggleSummary == "false" ? null : (
+            <li className="listitem">
+              <Link to="/Summary">Summary</Link>
+            </li>
+          )}
         </div>
       </nav>
       <div className="signUp">
         {isAuth ? (
-          <div className="text" onClick={handleLogout}> Log out </div>
+          <div className="text" onClick={handleLogout}>
+            {" "}
+            Log out{" "}
+          </div>
         ) : (
           <div className="text"> Sign in </div>
         )}

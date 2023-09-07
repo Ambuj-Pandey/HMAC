@@ -16,8 +16,8 @@ const TeachersView = () => {
   }, []);
   return (
     <>
-      <Navbar goTo="Student" />
-      
+      <Navbar goTo="Student" toggleSummary={"true"}/>
+     
       <div className="Professor-Section">
         <div data-aos="fade-right" className="teacher-view-Left-container">
           <div className="teacher-view">
