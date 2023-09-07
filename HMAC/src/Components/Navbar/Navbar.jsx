@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Navbar.css";
 import collegeLogo from "../../assets/college_logo.png";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const Navbar = ({ goTo }) => {
   const [isAuth, setIsAuth] = useState(false);
@@ -10,12 +11,25 @@ const Navbar = ({ goTo }) => {
     if (localStorage.getItem("access_token") !== null) {
       setIsAuth(true);
     }
+    console.log(isAuth);
   }, [isAuth]);
 
   const [menuOpen, setMenuOpen] = useState(false);
 
   const toggleMenu = () => {
     setMenuOpen(!menuOpen);
+  };
+
+  const handleLogout = () => {
+    // Clear the authentication tokens from local storage
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
+    
+    // Update the isAuth state to false
+    setIsAuth(false);
+
+    // You can also redirect the user to the login page if needed
+    window.location.href = "/"; // Replace with the actual login page URL
   };
 
   return (
@@ -55,9 +69,9 @@ const Navbar = ({ goTo }) => {
       </nav>
       <div className="signUp">
         {isAuth ? (
-          <div className="text"> Sign Up </div>
+          <div className="text" onClick={handleLogout}> Log out </div>
         ) : (
-          <div className="text">Logout </div>
+          <div className="text"> Sign in </div>
         )}
       </div>
     </div>
