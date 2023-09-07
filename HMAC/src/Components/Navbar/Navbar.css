@@ -37,6 +37,7 @@
 .logo {
     max-width: 100px;
     height: auto;
+    margin-left: 2vw;
 }
 
 .menu {
@@ -130,6 +131,9 @@
   
   /* Media query for responsive design */
   @media (max-width: 768px) {
+    .logo{
+        margin-left: -5vw;
+    }
     .header{
         display: flex;
         justify-content:flex-end;
@@ -160,13 +164,17 @@
   
     .navbar.open {
       display: flex;
+      padding: 20px;
+      margin-top: 257px;
       
     }
   
     .menu{
         flex-direction: column;
 margin: 0;
-margin-left: -15vw;        
+margin-left: 8vw;     
+align-items: center;
+justify-content: center;  ; 
     }
   }
   @media (max-width: 420px) {

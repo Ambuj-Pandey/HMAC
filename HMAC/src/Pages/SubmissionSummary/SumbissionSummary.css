@@ -1,0 +1,28 @@
+.submission-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.submission-bg-container{
+    margin-top: 250px;
+    font-size: xx-large;
+    padding: 30px;
+    width: 90%;
+    height: fit-content;
+    background-color: #e6e6e6;
+    border-radius: 5px;
+  
+}
+.submission-column-header {
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    font-size: large;
+    font-weight: bolder;
+    background-color: white;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    
+}
