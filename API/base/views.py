@@ -26,7 +26,6 @@ def upload_file(request):
     file = request.data.get('file')
     file_model = FileModel(filename=filename, description=description, file=file)
     file_model.save()
-    return HttpResponseRedirect('/success/')
 
 @api_view(['POST'])
 def login_view(request):
