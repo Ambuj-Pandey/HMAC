@@ -3,6 +3,11 @@ from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 
 
+class FileModel(models.Model):
+    filename = models.CharField(max_length=255)
+    description = models.TextField()
+    file = models.FileField(upload_to='files/')
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, user_id, email , password, is_active=True, is_staff=False, is_superuser=False, full_name=None):
 

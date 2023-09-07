@@ -3,7 +3,6 @@ from rest_framework import serializers
 from base.models import User
 from django.contrib.auth import authenticate
 
-
 class UserRegisterSerializer(ModelSerializer):
     class Meta:
         model = User

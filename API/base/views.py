@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from rest_framework.decorators import api_view
-
+from django.http import HttpResponseRedirect
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
@@ -11,6 +11,7 @@ from django.contrib.auth import logout
 from rest_framework_simplejwt.tokens import RefreshToken
 # import models
 from .models import User
+from .models import FileModel
 
 # import serializers
 from .serializers import UserSerializer
@@ -18,6 +19,14 @@ from .serializers import UserSerializer
 
 from django.contrib.auth import authenticate, login
 
+@api_view(['POST'])
+def upload_file(request):
+    filename = request.data.get('selectedFile')
+    description = request.data.get('desc')
+    file = request.data.get('file')
+    file_model = FileModel(filename=filename, description=description, file=file)
+    file_model.save()
+    return HttpResponseRedirect('/success/')
 
 @api_view(['POST'])
 def login_view(request):
@@ -45,6 +54,7 @@ def login_view(request):
     else:
         return Response({"error": "Login failed"}, status=400)
     
+
 
 
 

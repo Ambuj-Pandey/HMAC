@@ -2,14 +2,17 @@ import React, { useState, useRef } from "react";
 import Navbar from "../Navbar/Navbar";
 import "./Student.css";
 import PDF from "../../assets/PDF.png";
+import axios from 'axios';
 
 const Student = () => {
   const [selectedFile, setSelectedFile] = useState("");
   const [desc, setDesc] = useState("");
   const renameInputRef = useRef(null);
   const [isValid, setIsValid] = useState(true);
+  const [file, setFile] = useState(null);
 
   const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
     const file = e.target.files[0];
     setSelectedFile(file.name);
   };
@@ -21,6 +24,20 @@ const Student = () => {
     if (indexOfExtension > 0) {
       inputElement.setSelectionRange(0, indexOfExtension);
     }
+  };
+
+  const handleUpload = () => {
+    axios.post('http://127.0.0.1:8000/Upload/', {
+      selectedFile : selectedFile,
+      desc : desc,
+      file: file
+    })
+    .then(() => {
+        console.log('File uploaded successfully');
+    })
+    .catch(err => {
+        console.log(err);
+    });
   };
 
   return (
@@ -38,7 +55,7 @@ const Student = () => {
             accept=".pdf"
             onChange={handleFileChange}
           />
-            <button type="submit" className="submit-button">
+            <button onClick={handleUpload} type="submit" className="submit-button">
                 <span>Submit</span>
             </button>
         </div>
