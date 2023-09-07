@@ -26,9 +26,9 @@ const Student = () => {
     }
   };
 
-  const handleUpload = () => {
+  const handleUpload = (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData();
     formData.append('selectedFile', selectedFile);
     formData.append('desc', desc);
