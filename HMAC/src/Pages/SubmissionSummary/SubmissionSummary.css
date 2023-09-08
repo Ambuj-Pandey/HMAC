@@ -17,12 +17,27 @@
     list-style-type: none;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     font-size: large;
     font-weight: bolder;
     background-color: white;
     padding: 10px;
-    padding-left: 20px;
-    padding-right: 20px;
+    align-items: center;
+    gap: 10px;
     
+}
+.rollH{
+    width: 6vw;
+    text-align: center;
+    padding: 5px;
+}
+.nameH{
+    flex-grow: 4;
+    text-align: center; 
+    padding: 5px;
+    
+}
+.percentH{
+    flex-grow: 2;
+    text-align: center; 
+    padding: 5px;
 }

@@ -1,0 +1,47 @@
+
+.table-container {
+    margin: 20px;
+    overflow-x: auto;}
+  
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  
+  th {
+    background-color: white;
+    color: #333;
+    padding: 6px;
+    text-align: left;
+    margin-bottom: 10px; 
+    text-align: center;
+    border-bottom: 10px solid #e6e6e6;
+    font-size: 24px; 
+  }
+  
+  
+  .even-row {
+    background-color: #ffffff;
+  }
+  
+ 
+  .odd-row {
+    background-color: rgb(236, 236, 236);
+  }
+  
+
+  td {
+    padding: 6px; 
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+    text-align: center;
+    border-left: 8px solid #ddd; 
+  }
+
+  
+  /* Cell styles for the first column (no left border) */
+  td:first-child {
+    border-left: none; /* Remove left border for the first column */
+  }
