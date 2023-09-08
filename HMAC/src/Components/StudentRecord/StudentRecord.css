@@ -41,7 +41,7 @@
   }
 
   
-  /* Cell styles for the first column (no left border) */
+
   td:first-child {
-    border-left: none; /* Remove left border for the first column */
+    border-left: none;
   }
