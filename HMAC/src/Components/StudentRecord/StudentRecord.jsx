@@ -1,12 +1,29 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import "./StudentRecord.css"
 
 const StudentRecord = ()=>{
-    const data = [
-        { rollNo: 101, name: "John", aiDetectionPercent: 85, duplicatePercent: 10 },
-        { rollNo: 102, name: "Alice", aiDetectionPercent: 92, duplicatePercent: 5 },
-        { rollNo: 103, name: "Bob", aiDetectionPercent: 78, duplicatePercent: 15 },
-        { rollNo: 104, name: "Eve", aiDetectionPercent: 89, duplicatePercent: 8 },
-      ];
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+
+      const fetchStudentRecords = async () => {
+        try {
+          
+          const response = await axios.get('https://crispy-barnacle-pqqr5957pwv26xp6-8000.app.github.dev/teacher/files');
+  
+          if (response.status === 200) {
+            setData(response.data);
+          } else {
+            console.error('Error fetching data:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Network error:', error);
+        }
+      };
+
+      fetchStudentRecords();
+    }, []); 
     
       return (
         <div className="table-container">
@@ -22,10 +39,10 @@ const StudentRecord = ()=>{
             <tbody>
               {data.map((item, index) => (
                 <tr key={item.rollNo} className={index % 2 === 0 ? "even-row" : "odd-row"}>
-                  <td>{item.rollNo}</td>
-                  <td>{item.name}</td>
-                  <td>{item.aiDetectionPercent}%</td>
-                  <td>{item.duplicatePercent}%</td>
+                  <td>{item.filename}</td>
+                  <td>{item.filename}</td>
+                  <td>{item.filename}%</td>
+                  <td>{item.filename}%</td>
                 </tr>
               ))}
             </tbody>

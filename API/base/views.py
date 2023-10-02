@@ -9,13 +9,13 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
 from django.contrib.auth import logout
 from rest_framework_simplejwt.tokens import RefreshToken
+
 # import models
 from .models import User
 from .models import FileModel
 
 # import serializers
-from .serializers import UserSerializer
-# Create your views here.
+from .serializers import UserSerializer, FileSerializer
 
 from django.contrib.auth import authenticate, login
 
@@ -26,6 +26,15 @@ def upload_file(request):
     file = request.data.get('file')
     file_model = FileModel(filename=filename, description=description, file=file)
     file_model.save()
+
+@api_view(['GET'])
+def list_files_for_teacher(request):
+    serializer = None 
+    # if request.user.is_staff:   #isko baadmai karte
+    files = FileModel.objects.all()
+    serializer = FileSerializer(files, many=True)
+    print(serializer.data)
+    return Response(serializer.data)  
 
 @api_view(['POST'])
 def login_view(request):
@@ -53,22 +62,6 @@ def login_view(request):
     else:
         return Response({"error": "Login failed"}, status=400)
     
-
-
-
-
-# class LogoutView(APIView):
-#      permission_classes = (IsAuthenticated,)
-#      def post(self, request):
-          
-#           try:
-#                refresh_token = request.data["refresh_token"]
-#                token = RefreshToken(refresh_token)
-#                token.blacklist()
-#                return Response(status=status.HTTP_205_RESET_CONTENT)
-#           except Exception as e:
-#                return Response(status=status.HTTP_400_BAD_REQUEST)
-          
 
 def data(request):
     return HttpResponse("Hello World")

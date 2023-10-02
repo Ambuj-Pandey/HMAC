@@ -84,7 +84,7 @@ const LoginPage = () => {
         if (data.is_staff == true) {
           // Redirect staff users to a staff page
           window.location.href = "/Professor"; 
-          // Change the URL to the staff page
+        
         } else {
           // Redirect regular users to a different page
           window.location.href = "/Student"; 

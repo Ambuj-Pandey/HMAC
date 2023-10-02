@@ -162,7 +162,9 @@ AUTH_USER_MODEL = 'base.User'
 CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",  # Replace with the actual origin of your React app
+    "https://crispy-barnacle-pqqr5957pwv26xp6-5173.app.github.dev", #ig codespaces wont work
+    "http://localhost:5173",  
+   
 ]
 
 CORS_ALLOW_CREDENTIALS = True
