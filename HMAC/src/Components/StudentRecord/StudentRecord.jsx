@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import axios from 'axios';
 import "./StudentRecord.css"
 
@@ -10,7 +10,7 @@ const StudentRecord = ()=>{
       const fetchStudentRecords = async () => {
         try {
           
-          const response = await axios.get('https://crispy-barnacle-pqqr5957pwv26xp6-8000.app.github.dev/teacher/files');
+          const response = await axios.get('http://127.0.0.1:8000/teacher/files/');
   
           if (response.status === 200) {
             setData(response.data);

@@ -126,3 +126,7 @@ Control.ca-list
 Control.ca-bundle 
 Control.system-ca-bundle 
 GitHub.sublime-settings 
+
+./modelBert/model/pytorch_model.bin
+./modelBert/model/config.json
+
