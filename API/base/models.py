@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
 
+# user, pdf, pk= id
 
 class FileModel(models.Model):
     filename = models.CharField(max_length=255)

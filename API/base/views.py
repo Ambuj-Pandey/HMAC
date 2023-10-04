@@ -32,8 +32,9 @@ def list_files_for_teacher(request):
     serializer = None 
     # if request.user.is_staff:   #isko baadmai karte
     files = FileModel.objects.all()
+    # print(files)
     serializer = FileSerializer(files, many=True)
-    print(serializer.data)
+    print(files)
     return Response(serializer.data)  
 
 @api_view(['POST'])
