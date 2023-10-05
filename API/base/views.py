@@ -19,6 +19,8 @@ from .serializers import UserSerializer, FileSerializer
 
 from django.contrib.auth import authenticate, login
 
+from .comparison import read_file_content, calculate_similarity, compare_file_similarity
+
 @api_view(['POST'])
 def upload_file(request):
     filename = request.data.get('selectedFile')
@@ -32,9 +34,8 @@ def list_files_for_teacher(request):
     serializer = None 
     # if request.user.is_staff:   #isko baadmai karte
     files = FileModel.objects.all()
-    # print(files)
     serializer = FileSerializer(files, many=True)
-    print(files)
+    print(serializer.data)
     return Response(serializer.data)  
 
 @api_view(['POST'])
