@@ -1,11 +1,11 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
-
-
-from .comparison import compare_uploaded_file_with_database
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+
+import concurrent.futures
+from .comparison import compare_file_similarity
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, user_id, email , password, is_active=True, is_staff=False, is_superuser=False, full_name=None):
@@ -53,7 +53,6 @@ class CustomUserManager(BaseUserManager):
             )
         return User
     
-
 class User(AbstractUser):
     user_id = models.CharField(max_length=50, unique=True)
     # username = models.CharField(max_length=50, null=True)
@@ -95,7 +94,6 @@ class FileModel(models.Model):
 
     
     def read_file_content(self):
-        # Implement this method to read and return the content of the file
         try:
             with open(self.file.path, 'r') as file:
                 content = file.read()
@@ -108,6 +106,45 @@ class FileModel(models.Model):
     def __str__(self):
         return self.filename
 
+class FileComparisonModel(models.Model):
+    uploaded_file = models.ForeignKey(FileModel, on_delete=models.CASCADE, related_name='uploaded_file')
+    other_file = models.ForeignKey(FileModel, on_delete=models.CASCADE, related_name='other_file')
+    similarity_result = models.FloatField()
+
+    def __str__(self):
+        return f"Comparison between {self.uploaded_file.filename} and {self.other_file.filename}"
+
+
+def compare_uploaded_file_with_database(uploaded_file_content, uploaded_file_data, file_model_list):
+    comparisons = []  # To store comparison results before saving
+
+    # Some parallel processing magic which I have no clue of
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        future_to_filename = {
+            executor.submit(compare_file_similarity, uploaded_file_content, file_model): file_model.filename
+            for file_model in file_model_list
+        }
+        for future in concurrent.futures.as_completed(future_to_filename):
+            filename = future_to_filename[future]
+            try:
+                result = future.result()
+                if result[1] is not None:
+                    print(f"Similarity between uploaded file and '{filename}': {result[1] * 100:.2f}")
+                     # Create a dictionary to store comparison data
+                    comparison_data = {
+                        'uploaded_file': uploaded_file_data, 
+                        'other_file': file_model_list.get(filename=filename),
+                        'similarity_result': result[1],
+                    }
+                    comparisons.append(comparison_data)
+                else:
+                    print(f"Error processing '{filename}': Unable to calculate similarity.")
+            except Exception as exc:
+                print(f"Error processing '{filename}': {exc}")
+
+    FileComparisonModel.objects.bulk_create([FileComparisonModel(**data) for data in comparisons])
+
+
 @receiver(post_save, sender=FileModel)
 def calculate_similarity_on_upload(sender, instance, created, **kwargs):
     if created:
@@ -117,5 +154,9 @@ def calculate_similarity_on_upload(sender, instance, created, **kwargs):
         # Get all other files from the database
         other_files = FileModel.objects.exclude(pk=instance.pk)
 
+        # Pass uploaded_file_data as a parameter
+        uploaded_file_data = instance
+
         # Trigger similarity calculation for the uploaded file with all other files
-        compare_uploaded_file_with_database(uploaded_file_content, other_files)
+        compare_uploaded_file_with_database(uploaded_file_content, uploaded_file_data, other_files)
+
