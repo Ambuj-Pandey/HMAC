@@ -7,15 +7,10 @@ from .comparison import compare_uploaded_file_with_database
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-<<<<<<< HEAD
-import fitz
-
-
 import concurrent.futures
 from .comparison import compare_file_similarity
 
-=======
->>>>>>> parent of b461c24 (something)
+
 class CustomUserManager(BaseUserManager):
     def create_user(self, user_id, email , password, is_active=True, is_staff=False, is_superuser=False, full_name=None):
 
@@ -91,22 +86,6 @@ class FileModel(models.Model):
     description = models.TextField()
     file = models.FileField(upload_to='files/')
 
-    def save(self, *args, **kwargs):
-        # Assign a default user if 'uploaded_by' is not set
-        if not self.uploaded_by:
-            self.uploaded_by = User.objects.get(Email='a@a.com')  # Replace with the actual default user
-        super().save(*args, **kwargs)
-
-
-    
-    def __str__(self):
-        return self.filename
-
-class FileTxt(models.Model):
-    file = models.OneToOneField(FileModel, on_delete=models.CASCADE)
-    txt_file = models.FileField(upload_to='text_files/', null=True, blank=True)
-    # Add more fields as needed
-
     @staticmethod
     def preprocess_ocr_data(ocr_data):
         # This removes the commas from the txt files to not cause bloated percentage
@@ -118,21 +97,29 @@ class FileTxt(models.Model):
         try:
             with open(self.file.path, 'r') as file:
                 content = file.read()
-                preprocessed_content = FileTxt.preprocess_ocr_data(content)
+                preprocessed_content = FileModel.preprocess_ocr_data(content)
                 return preprocessed_content
         except Exception as exc:
-            print(f"Error reading file '{self.file.filename}': {exc}")
+            print(f"Error reading file '{self.filename}': {exc}")
             return ""
         
 
+    def save(self, *args, **kwargs):
+        # Assign a default user if 'uploaded_by' is not set
+        if not self.uploaded_by:
+            self.uploaded_by = User.objects.get(Email='a@a.com')  # Replace with the actual default user
+        super().save(*args, **kwargs)
+
+
+    
     def __str__(self):
-        return self.file.filename  # Display the filename as a string representation
+        return self.filename
 
 
-<<<<<<< HEAD
+
 class FileComparisonModel(models.Model):
-    uploaded_file = models.ForeignKey(FileTxt, on_delete=models.CASCADE, related_name='uploaded_file')
-    other_file = models.ForeignKey(FileTxt, on_delete=models.CASCADE, related_name='other_file')
+    uploaded_file = models.ForeignKey( FileModel , on_delete=models.CASCADE, related_name='uploaded_file')
+    other_file = models.ForeignKey(FileModel, on_delete=models.CASCADE, related_name='other_file')
     similarity_result = models.FloatField()
 
     def __str__(self):
@@ -145,7 +132,7 @@ def compare_uploaded_file_with_database(uploaded_file_content, uploaded_file_dat
     # Some parallel processing magic which I have no clue of
     with concurrent.futures.ThreadPoolExecutor() as executor:
         future_to_filename = {
-            executor.submit(compare_file_similarity, uploaded_file_content, file_model): file_model.file.filename
+            executor.submit(compare_file_similarity, uploaded_file_content, file_model): file_model.filename
             for file_model in file_model_list
         }
         for future in concurrent.futures.as_completed(future_to_filename):
@@ -168,44 +155,17 @@ def compare_uploaded_file_with_database(uploaded_file_content, uploaded_file_dat
 
     FileComparisonModel.objects.bulk_create([FileComparisonModel(**data) for data in comparisons])
 
-
-
-def extract_text_from_pdf(pdf_path):
-    text = ""
-    doc = fitz.open(pdf_path)
-    for page in doc:
-        text += page.get_text()
-
-    return text.replace(' ', '').replace('\n', ',')
-
-from django.core.files.base import ContentFile
-from django.utils.text import slugify
-
-=======
->>>>>>> parent of b461c24 (something)
-@receiver(post_save, sender=FileModel)
-def saveTxtFile(sender, instance, created, **kwargs):
-    if created:
-        pdf_path = instance.file.path  # Get the path to the uploaded PDF file
-        txt_data = extract_text_from_pdf(pdf_path)  # Extract text from the PDF
-
-        # Replace unsupported characters in the filename
-        filename = slugify(instance.filename) + ".txt"
-        txt_data = txt_data.encode("utf-8")
-
-        # Save the extracted text as a .txt file in the FileTxt model
-        txt_file = FileTxt(file=instance)
-        txt_file.txt_file.save(filename, ContentFile(txt_data))
-        txt_file.save()
         
-@receiver(post_save, sender=FileTxt)
+@receiver(post_save, sender=FileModel)
 def calculate_similarity_on_upload(sender, instance, created, **kwargs):
     if created:
         # Get the content of the uploaded file using the newly defined method
         uploaded_file_content = instance.read_file_content()
 
         # Get all other files from the database
-        other_files = FileTxt.objects.exclude(pk=instance.pk)
+        other_files = FileModel.objects.exclude(pk=instance.pk)
+
+        uploaded_file_data = instance
 
         # Trigger similarity calculation for the uploaded file with all other files
-        compare_uploaded_file_with_database(uploaded_file_content, other_files)
+        compare_uploaded_file_with_database(uploaded_file_content,uploaded_file_data, other_files)
