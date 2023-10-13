@@ -4,8 +4,10 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
-import fitz
+from django.core.files.base import ContentFile
+from django.utils.text import slugify
 
+import fitz
 
 import concurrent.futures
 from .comparison import compare_file_similarity
@@ -98,6 +100,8 @@ class FileModel(models.Model):
 class FileTxt(models.Model):
     file = models.OneToOneField(FileModel, on_delete=models.CASCADE)
     txt_file = models.FileField(upload_to='text_files/', null=True, blank=True)
+    filename = models.CharField(max_length=255, null=True, blank=True)
+
     # Add more fields as needed
 
     @staticmethod
@@ -108,12 +112,12 @@ class FileTxt(models.Model):
     
     def read_file_content(self):
         try:
-            with open(self.file.path, 'r') as file:
+            with open(self.txt_file.path, 'r') as file:
                 content = file.read()
                 preprocessed_content = FileTxt.preprocess_ocr_data(content)
                 return preprocessed_content
         except Exception as exc:
-            print(f"Error reading file '{self.file.filename}': {exc}")
+            print(f"Error reading file '{self.filename}': {exc}")
             return ""
         
 
@@ -136,7 +140,7 @@ def compare_uploaded_file_with_database(uploaded_file_content, uploaded_file_dat
     # Some parallel processing magic which I have no clue of
     with concurrent.futures.ThreadPoolExecutor() as executor:
         future_to_filename = {
-            executor.submit(compare_file_similarity, uploaded_file_content, file_model): file_model.file.filename
+            executor.submit(compare_file_similarity, uploaded_file_content, file_model): file_model.txt_file
             for file_model in file_model_list
         }
         for future in concurrent.futures.as_completed(future_to_filename):
@@ -169,9 +173,6 @@ def extract_text_from_pdf(pdf_path):
 
     return text.replace(' ', '').replace('\n', ',')
 
-from django.core.files.base import ContentFile
-from django.utils.text import slugify
-
 @receiver(post_save, sender=FileModel)
 def saveTxtFile(sender, instance, created, **kwargs):
     if created:
@@ -183,13 +184,15 @@ def saveTxtFile(sender, instance, created, **kwargs):
         txt_data = txt_data.encode("utf-8")
 
         # Save the extracted text as a .txt file in the FileTxt model
-        txt_file = FileTxt(file=instance)
+        txt_file = FileTxt(file=instance, filename=filename)
         txt_file.txt_file.save(filename, ContentFile(txt_data))
         txt_file.save()
         
 @receiver(post_save, sender=FileTxt)
 def calculate_similarity_on_upload(sender, instance, created, **kwargs):
+    print("Signal triggered")
     if created:
+        print(f"File '{instance.filename}' uploaded. Calculating similarity...")
         # Get the content of the uploaded file using the newly defined method
         uploaded_file_content = instance.read_file_content()
 
