@@ -5,21 +5,18 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.permissions import IsAuthenticated
-
+from django.contrib.auth import authenticate, login
 from rest_framework.authentication import SessionAuthentication
 from django.contrib.auth import logout
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.db.models import Max
 
 # import models
 from .models import User
-from .models import FileModel
+from .models import FileModel, FileComparisonModel
 
 # import serializers
 from .serializers import UserSerializer, FileSerializer
-
-from django.contrib.auth import authenticate, login
-
-from .comparison import read_file_content, calculate_similarity, compare_file_similarity
 
 @api_view(['POST'])
 def upload_file(request):
@@ -34,9 +31,25 @@ def list_files_for_teacher(request):
     serializer = None 
     # if request.user.is_staff:   #isko baadmai karte
     files = FileModel.objects.all()
+    max_similarities = {}
+
+    # Calculate the maximum similarity for each file
+    for file in files:
+        # Use an aggregation query to find the maximum similarity for this file
+        max_similarity = FileComparisonModel.objects.filter(uploaded_file=file).aggregate(Max('similarity_result'))['similarity_result__max']
+
+        # Add the max_similarity to the dictionary with the file's id as the key
+        max_similarities[file.id] = max_similarity
+
     serializer = FileSerializer(files, many=True)
     print(serializer.data)
-    return Response(serializer.data)  
+
+    response_data = {
+        'files': serializer.data,
+        'max_similarities': max_similarities,
+    }
+
+    return Response(response_data)  
 
 @api_view(['POST'])
 def login_view(request):
@@ -104,16 +117,4 @@ def getRoutes(request):
     ]
 
     return Response(routes)
-
-@api_view(['GET'])
-def getUsers(request):
-    users = User.objects.all()
-    serializer = UserSerializer(users, many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def getUser(request, id):
-    users = User.objects.get(pk=id)
-    serializer = UserSerializer(users, many=False)
-    return Response(serializer.data)
 
