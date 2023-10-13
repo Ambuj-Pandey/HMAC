@@ -1,15 +1,21 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.base_user import BaseUserManager
+
+
+from .comparison import compare_uploaded_file_with_database
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+<<<<<<< HEAD
 import fitz
 
 
 import concurrent.futures
 from .comparison import compare_file_similarity
 
+=======
+>>>>>>> parent of b461c24 (something)
 class CustomUserManager(BaseUserManager):
     def create_user(self, user_id, email , password, is_active=True, is_staff=False, is_superuser=False, full_name=None):
 
@@ -56,6 +62,7 @@ class CustomUserManager(BaseUserManager):
             )
         return User
     
+
 class User(AbstractUser):
     user_id = models.CharField(max_length=50, unique=True)
     # username = models.CharField(max_length=50, null=True)
@@ -107,6 +114,7 @@ class FileTxt(models.Model):
 
     
     def read_file_content(self):
+        # Implement this method to read and return the content of the file
         try:
             with open(self.file.path, 'r') as file:
                 content = file.read()
@@ -121,6 +129,7 @@ class FileTxt(models.Model):
         return self.file.filename  # Display the filename as a string representation
 
 
+<<<<<<< HEAD
 class FileComparisonModel(models.Model):
     uploaded_file = models.ForeignKey(FileTxt, on_delete=models.CASCADE, related_name='uploaded_file')
     other_file = models.ForeignKey(FileTxt, on_delete=models.CASCADE, related_name='other_file')
@@ -172,6 +181,8 @@ def extract_text_from_pdf(pdf_path):
 from django.core.files.base import ContentFile
 from django.utils.text import slugify
 
+=======
+>>>>>>> parent of b461c24 (something)
 @receiver(post_save, sender=FileModel)
 def saveTxtFile(sender, instance, created, **kwargs):
     if created:
@@ -196,9 +207,5 @@ def calculate_similarity_on_upload(sender, instance, created, **kwargs):
         # Get all other files from the database
         other_files = FileTxt.objects.exclude(pk=instance.pk)
 
-        # Pass uploaded_file_data as a parameter
-        uploaded_file_data = instance
-
         # Trigger similarity calculation for the uploaded file with all other files
-        compare_uploaded_file_with_database(uploaded_file_content, uploaded_file_data, other_files)
-
+        compare_uploaded_file_with_database(uploaded_file_content, other_files)

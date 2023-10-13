@@ -1,7 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from rest_framework.decorators import api_view
 from django.http import HttpResponseRedirect
-from django.contrib.auth import authenticate, login
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
@@ -16,7 +15,11 @@ from .models import User
 from .models import FileModel
 
 # import serializers
-from .serializers import FileSerializer
+from .serializers import UserSerializer, FileSerializer
+
+from django.contrib.auth import authenticate, login
+
+from .comparison import read_file_content, calculate_similarity, compare_file_similarity
 
 @api_view(['POST'])
 def upload_file(request):
@@ -52,7 +55,7 @@ def login_view(request):
         response_data = {
             "access_token": access_token,
             "refresh_token": refresh_token,
-            "is_staff": user.is_staff, 
+            "is_staff": user.is_staff,  # Include the is_staff value
         }
 
         response = Response(response_data)
@@ -60,7 +63,10 @@ def login_view(request):
         return response
     else:
         return Response({"error": "Login failed"}, status=400)
+    
 
+def data(request):
+    return HttpResponse("Hello World")
 
 @api_view(['GET'])
 def getRoutes(request):
@@ -98,3 +104,16 @@ def getRoutes(request):
     ]
 
     return Response(routes)
+
+@api_view(['GET'])
+def getUsers(request):
+    users = User.objects.all()
+    serializer = UserSerializer(users, many=True)
+    return Response(serializer.data)
+
+@api_view(['GET'])
+def getUser(request, id):
+    users = User.objects.get(pk=id)
+    serializer = UserSerializer(users, many=False)
+    return Response(serializer.data)
+
