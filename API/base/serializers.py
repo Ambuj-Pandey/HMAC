@@ -2,12 +2,10 @@ from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from base.models import User
 from .models import FileModel
+from .models import FileComparisonModel
 from django.contrib.auth import authenticate
 
-class FileSerializer(ModelSerializer):
-    class Meta:
-        model = FileModel
-        fields = ('filename', 'description', 'file')
+
 
 class UserRegisterSerializer(ModelSerializer):
     class Meta:
@@ -22,6 +20,18 @@ class UserRegisterSerializer(ModelSerializer):
         )
         user.save()
         return user
+    
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
+class FileSerializer(ModelSerializer):
+    uploaded_by = UserSerializer()
+    class Meta:
+        model = FileModel
+        fields = '__all__'
 
 
 class UserLoginSerializer(ModelSerializer):
@@ -42,7 +52,10 @@ class UserLoginSerializer(ModelSerializer):
         return user
 
 
-class UserSerializer(ModelSerializer):
+class FileComparisonSerializer(serializers.ModelSerializer):
+    uploaded_file = FileSerializer()
+    other_file = FileSerializer()
+
     class Meta:
-        model = User
-        fields = '__all__'
+        model = FileComparisonModel
+        fields = ('uploaded_file', 'other_file', 'similarity_result')

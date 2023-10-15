@@ -32,21 +32,41 @@ def list_files_for_teacher(request):
     # if request.user.is_staff:   #isko baadmai karte
     files = FileModel.objects.all()
     max_similarities = {}
+    other_file_info = {}
 
     # Calculate the maximum similarity for each file
     for file in files:
         # Use an aggregation query to find the maximum similarity for this file
         max_similarity = FileComparisonModel.objects.filter(uploaded_file=file).aggregate(Max('similarity_result'))['similarity_result__max']
 
-        # Add the max_similarity to the dictionary with the file's id as the key
-        max_similarities[file.id] = max_similarity
+        similar_files = FileComparisonModel.objects.filter(uploaded_file=file, similarity_result=max_similarity)
+
+        other_file_info[file.filename] = [f.other_file for f in similar_files]
+
+        # Add the max_similarity to the dictionary with the file's name as the key
+        max_similarities[file.filename] = max_similarity if max_similarity is not None else 0.0 # Default to 0.0 if no max_similarity found
 
     serializer = FileSerializer(files, many=True)
-    print(serializer.data)
 
+    file_data = []
+    for file in serializer.data:
+        filename = file['filename']
+        max_similarity = max_similarities.get(filename, 0.0)  # Default to 0.0 if no max_similarity found
+        uploader_info = file['uploaded_by']
+        other_files = [FileSerializer(f).data for f in other_file_info.get(filename, None)]
+        other_file_names = [f['filename'] for f in other_files]
+
+        file_data.append({
+            **file,
+            'max_similarity': max_similarity,
+            'uploaded_by_info': uploader_info,
+            'other_files_with_max_similarity': other_files,
+            'other_file_names': other_file_names
+        })
+        print(other_file_names)
+        
     response_data = {
-        'files': serializer.data,
-        'max_similarities': max_similarities,
+        'file_data':file_data,
     }
 
     return Response(response_data)  
@@ -76,10 +96,6 @@ def login_view(request):
         return response
     else:
         return Response({"error": "Login failed"}, status=400)
-    
-
-def data(request):
-    return HttpResponse("Hello World")
 
 @api_view(['GET'])
 def getRoutes(request):

@@ -14,7 +14,7 @@ const StudentRecord = () => {
                 console.log(response.data);
 
                 if (response.status === 200) {
-                    setData(response.data.files);
+                    setData(response.data.file_data);
                     setMaxSimilarities(response.data.max_similarities);
                 } else {
                     console.error('Error fetching data:', response.statusText);
@@ -32,20 +32,22 @@ const StudentRecord = () => {
             <table>
                 <thead>
                     <tr>
-                        <th>Roll No</th>
+                        
                         <th>Student Name</th>
+                        <th>File Name</th>
                         <th>AI Detection %</th>
                         <th>Duplicate Content %</th>
+                        <th>with</th>
                     </tr>
                 </thead>
                 <tbody>
                     {data.map((item, index) => (
                         <tr key={item.id} className={index % 2 === 0 ? "even-row" : "odd-row"}>
-                            <td>{item.id}</td>
+                            <td>{item.uploaded_by_info.full_name}</td>
                             <td>{item.filename}</td>
-                            <td>{item.filename}%</td>
-                            {console.log(maxSimilarities[item.id])}
-                            <td>{maxSimilarities[item.id]}</td>
+                            <td>-</td>
+                            <td>{item.max_similarity}</td>
+                            <td>{item.other_file_names}</td>
                         </tr>
                     ))}
                 </tbody>
