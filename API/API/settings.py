@@ -163,6 +163,7 @@ CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  
+    'https://super-duper-space-waffle-qx4vrr9jqxv2q4q-5173.app.github.dev',
    
 ]
 
