@@ -46,7 +46,8 @@ const TeachersView = () => {
               </p>
             </div>
 
-            <SlidingIndicator />
+            <SlidingIndicator
+             value={50} />
 
             <DuplicateDetection />
           </div>

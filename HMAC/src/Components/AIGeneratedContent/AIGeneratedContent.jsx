@@ -1,17 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./AIGeneratedContent.css"; 
 
-const SlidingIndicator = () => {
+const SlidingIndicator = ({value}) => {
   const [responseRate, setResponseRate] = useState(1); // Set an initial non-zero value
-
-  // Function to generate a random initial value between 0 and 100
-  const getRandomInitialValue = () => {
-    return Math.floor(Math.random() * 101); // Generates a random number between 0 and 100
-  };
 
   useEffect(() => {
     // Set the initial random value when the component mounts
-    setResponseRate(getRandomInitialValue());
+    setResponseRate(value);
   }, []); // Empty dependency array to run this effect only once
   
   const animationWidth = `${Math.min(responseRate, 100)}%`;
@@ -27,7 +22,7 @@ const SlidingIndicator = () => {
 
   return (
     <div className="sliding-indicator-container">
-      <div className="text">AI Generated Content</div>
+      {/* <div className="text">AI Generated Content</div> */}
       <div className="progress-bar">
         <div
           className={`progress${responseRate > 0 ? " animate" : ""}`}

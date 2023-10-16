@@ -44,7 +44,7 @@ def list_files_for_teacher(request):
         other_file_info[file.filename] = [f.other_file for f in similar_files]
 
         # Add the max_similarity to the dictionary with the file's name as the key
-        max_similarities[file.filename] = max_similarity if max_similarity is not None else 0.0 # Default to 0.0 if no max_similarity found
+        max_similarities[file.filename] = float(str(max_similarity*100)[:6]) if max_similarity is not None else 0.0 # Default to 0.0 if no max_similarity found
 
     serializer = FileSerializer(files, many=True)
 

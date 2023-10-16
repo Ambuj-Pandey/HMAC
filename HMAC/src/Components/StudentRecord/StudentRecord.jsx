@@ -2,6 +2,8 @@ import  { useEffect, useState } from 'react';
 import axios from 'axios';
 import "./StudentRecord.css"
 
+import SlidingIndicator from "../AIGeneratedContent/AIGeneratedContent";
+
 const StudentRecord = () => {
     const [data, setData] = useState([]);
     const [maxSimilarities, setMaxSimilarities] = useState({});
@@ -46,7 +48,10 @@ const StudentRecord = () => {
                             <td>{item.uploaded_by_info.full_name}</td>
                             <td>{item.filename}</td>
                             <td>-</td>
-                            <td>{item.max_similarity}</td>
+                            <td>
+                                <SlidingIndicator
+                                    value={item.max_similarity} /></td>
+                           
                             <td>{item.other_file_names}</td>
                         </tr>
                     ))}

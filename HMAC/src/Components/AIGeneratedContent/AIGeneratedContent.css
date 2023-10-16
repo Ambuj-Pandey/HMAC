@@ -1,16 +1,16 @@
 .sliding-indicator-container {
-    position: relative;
+    /* position: relative;
     left: 20px;
-    top: 290px;
+    top: 290px; */
     display: flex;
     flex-direction: column;
     width: 450px;
 }
 
 .sliding-indicator-container .text {
-    position: relative;
+    /* position: relative;
     top: 5px;
-    left: -20px;
+    left: -20px; */
     font-weight: 300;
     font-size: 16px;
     display: inline-block;
@@ -20,8 +20,10 @@
 }
 
 .sliding-indicator-container .progress-bar {
+    margin-left: 35%;
+    
     width: 100%;
-    max-width: 350px;
+    max-width: 250px;
     background-color: #ccc;
     border-radius: var(--br-21xl);
     overflow: hidden;
@@ -42,6 +44,8 @@
 
 .sliding-indicator-container .percent-text {
     color: white;
-    margin-left: 10px;
+    text-align: center;
+    margin-left: 100px;
+    font-size: medium;
 }
 
