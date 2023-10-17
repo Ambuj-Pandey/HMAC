@@ -37,9 +37,9 @@ const StudentRecord = () => {
                         
                         <th>Student Name</th>
                         <th>File Name</th>
-                        <th>AI Detection %</th>
-                        <th>Duplicate Content %</th>
-                        <th>with</th>
+                        <th>AI Detection </th>
+                        <th>Duplicate Content</th>
+                        <th>With</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -47,7 +47,7 @@ const StudentRecord = () => {
                         <tr key={item.id} className={index % 2 === 0 ? "even-row" : "odd-row"}>
                             <td>{item.uploaded_by_info.full_name}</td>
                             <td>{item.filename}</td>
-                            <td>-</td>
+                            <td><SlidingIndicator value={Math.floor(Math.random() * 101)}></SlidingIndicator></td>
                             <td>
                                 <SlidingIndicator
                                     value={item.max_similarity} /></td>
