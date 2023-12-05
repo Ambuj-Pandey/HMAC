@@ -13,6 +13,7 @@ from django.db.models import Max
 
 import torch
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
+
 # import models
 from .models import User
 from .models import FileModel, FileComparisonModel
@@ -20,18 +21,11 @@ from .models import FileModel, FileComparisonModel
 # import serializers
 from .serializers import UserSerializer, FileSerializer
 
-
+from .helper import roboflowHelperFunc, ocrHelperFunc, deleteImages, makeDir
 # my plan for AI content:
 
 # uploads a file, trigger a signal, and in signal -> get the text ---and then AI would be calulate for that text
 
-
-model_path = 'model'
-tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
-num_labels = 2
-model = DistilBertForSequenceClassification.from_pretrained(
-    model_path, num_labels=num_labels)
-model.eval()
 
 @api_view(['POST'])
 def upload_file(request):
@@ -95,22 +89,30 @@ def list_files_for_teacher(request):
     return Response(response_data)
 
 
+model_path = 'model'
+tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
+num_labels = 2
+Bert_Model = DistilBertForSequenceClassification.from_pretrained(
+    model_path, num_labels=num_labels)
+Bert_Model.eval()
+
 @api_view(['POST', 'GET'])
 def AIContentDectection(request):
-    text = '''
-            Google is an internet search engine. It uses a proprietary algorithm that’s designed to retrieve and order search results to provide the most relevant and dependable sources of data possible.
+    makeDir()
 
-            Google’s stated mission is to “organize the world’s information and make it universally accessible and useful.” It is the top search engine in the world, a position that has generated criticism and concern about the power it has to influence the flow of online information.
+    lines = roboflowHelperFunc()
 
-            Google is so dominant that the term “Google” can also be used as a verb, so that when someone searches for something on Google, they may say they “Googled” it.
-                '''
+    print("Type of 'detections':", type(lines))
+
+    text = ocrHelperFunc(lines)
+  
     inputs = tokenizer(text, return_tensors="pt")
 
     input_ids = inputs["input_ids"]
     attention_mask = inputs["attention_mask"]
 
     with torch.no_grad():
-        outputs = model(input_ids, attention_mask)
+        outputs = Bert_Model(input_ids, attention_mask)
         logits = outputs.logits
 
     probabilities = torch.softmax(logits, dim=1)
@@ -119,7 +121,8 @@ def AIContentDectection(request):
 
     class_labels = [str(i) for i in range(num_labels)]
 
-    class_percentage_dict = {label: percentage for label, percentage in zip(class_labels, percentage_probs)}
+    class_percentage_dict = {label: percentage for label,
+                             percentage in zip(class_labels, percentage_probs)}
 
     for label, percentage in class_percentage_dict.items():
         print(f"Class {label}: {percentage:.2f}%")
