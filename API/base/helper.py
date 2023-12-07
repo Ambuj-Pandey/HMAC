@@ -1,11 +1,13 @@
 from roboflow import Roboflow
 import cv2
 
-rf = Roboflow(api_key="pkTvzHUBUJW9XbfPJuU6")
-project = rf.workspace().project("word_detection-mtq4b")
-model = project.version(1).model
+
 
 def roboflowHelperFunc():
+    rf = Roboflow(api_key="pkTvzHUBUJW9XbfPJuU6")
+    project = rf.workspace().project("word_detection-mtq4b")
+    model = project.version(1).model
+
     import supervision as sv
 
     base_path = "C:/Users/Nandini/Documents/GitHub/HMAC/API/base/1.jpg"
@@ -150,7 +152,7 @@ def makeDir():
     import os 
     directory = "testing"
  
-    parent_dir = "C:/Users/Nandini/Documents/GitHub/HMAC/API/OCR/testing/"
+    parent_dir = "C:/Users/Nandini/Documents/GitHub/HMAC/API/OCR/"
 
     path = os.path.join(parent_dir, directory) 
 
