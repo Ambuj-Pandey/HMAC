@@ -5,6 +5,10 @@ from django.contrib.auth.base_user import BaseUserManager
 from .comparison import compare_uploaded_file_with_database
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.conf import settings
+
+import os
+from pdf2image import convert_from_path
 
 import concurrent.futures
 from .comparison import compare_file_similarity
@@ -13,6 +17,11 @@ from .helper import roboflowHelperFunc, ocrHelperFunc, makeDir
 
 import torch
 from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
+
+
+COVER_PAGE_DIRECTORY = 'coverdirectory/'
+# PDF_DIRECTORY = 'pdfdirectory/'
+COVER_PAGE_FORMAT = 'jpg'
 
 class CustomUserManager(BaseUserManager):
     def create_user(self, user_id, email, password, is_active=True, is_staff=False, is_superuser=False, full_name=None):
@@ -132,7 +141,7 @@ class FileImage(models.Model):
         return self.filename
 
 class AIDetection(models.Model):
-    uploaded_file = models.OneToOneField(FileModel, on_delete=models.CASCADE)
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     detection_results_Human = models.FloatField(null=True)
     detection_results_AI = models.FloatField(null=True)
 
@@ -189,15 +198,6 @@ class AIDetection(models.Model):
 #             uploaded_file_content, uploaded_file_data, other_files)
 
 
-
-from pdf2image import convert_from_path
-from django.conf import settings
-import os
-
-
-COVER_PAGE_DIRECTORY = 'coverdirectory/'
-# PDF_DIRECTORY = 'pdfdirectory/'
-COVER_PAGE_FORMAT = 'jpg'
 
 @receiver(post_save, sender=FileModel)
 def convert_pdf_to_image(sender, instance, created, **kwargs):
@@ -258,7 +258,7 @@ def create_ai_detection(sender, instance, created, **kwargs):
 
         makeDir()
 
-        lines = roboflowHelperFunc()
+        lines = roboflowHelperFunc(instance)
 
         print("Type of 'detections':", type(lines))
 
@@ -292,7 +292,7 @@ def create_ai_detection(sender, instance, created, **kwargs):
 
         # Create an AIDetection instance associated with the uploaded FileModel
         ai_detection = AIDetection(
-            uploaded_file=instance.pdfFile,
+            uploaded_by=instance.uploaded_by,
             detection_results_Human=detection_results_Human,
             detection_results_AI=detection_results_AI,
             # You can set initial values for detection_results_Human and detection_results_AI here if needed

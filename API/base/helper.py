@@ -3,14 +3,14 @@ import cv2
 
 
 
-def roboflowHelperFunc():
+def roboflowHelperFunc(instance):
     rf = Roboflow(api_key="pkTvzHUBUJW9XbfPJuU6")
     project = rf.workspace().project("word_detection-mtq4b")
     model = project.version(1).model
 
     import supervision as sv
 
-    base_path = "C:/Users/Nandini/Documents/GitHub/HMAC/API/base/1.jpg"
+    base_path = instance.file.path
 
     image_path = base_path
 
@@ -100,7 +100,9 @@ def hconcat_resize_batch(img_list, batch_size=10, interpolation=cv2.INTER_CUBIC)
 
         im_list_resize = [cv2.resize(img, (int(img.shape[1] * h_min / img.shape[0]), h_min), interpolation=interpolation) for img in batch]
 
-        result_image = cv2.hconcat(im_list_resize)
+        im_list_padded = [cv2.copyMakeBorder(img, top=0, bottom=0, left=0, right=10, borderType=cv2.BORDER_CONSTANT, value=(255, 255, 255)) for img in im_list_resize]
+
+        result_image = cv2.hconcat(im_list_padded)
 
         result_images.append(result_image)
 

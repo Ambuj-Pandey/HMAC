@@ -11,8 +11,6 @@ from django.contrib.auth import logout
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.db.models import Max
 
-import torch
-from transformers import DistilBertTokenizer, DistilBertForSequenceClassification
 
 # import models
 from .models import User
@@ -20,12 +18,6 @@ from .models import FileModel, FileComparisonModel
 
 # import serializers
 from .serializers import UserSerializer, FileSerializer
-
-from .helper import roboflowHelperFunc, ocrHelperFunc, deleteImages, makeDir
-# my plan for AI content:
-
-# uploads a file, trigger a signal, and in signal -> get the text ---and then AI would be calulate for that text
-
 
 @api_view(['POST'])
 def upload_file(request):
@@ -89,45 +81,9 @@ def list_files_for_teacher(request):
     return Response(response_data)
 
 
-model_path = 'model'
-tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
-num_labels = 2
-Bert_Model = DistilBertForSequenceClassification.from_pretrained(
-    model_path, num_labels=num_labels)
-Bert_Model.eval()
-
 @api_view(['POST', 'GET'])
 def AIContentDectection(request):
-    makeDir()
-
-    lines = roboflowHelperFunc()
-
-    print("Type of 'detections':", type(lines))
-
-    text = ocrHelperFunc(lines)
-  
-    inputs = tokenizer(text, return_tensors="pt")
-
-    input_ids = inputs["input_ids"]
-    attention_mask = inputs["attention_mask"]
-
-    with torch.no_grad():
-        outputs = Bert_Model(input_ids, attention_mask)
-        logits = outputs.logits
-
-    probabilities = torch.softmax(logits, dim=1)
-
-    percentage_probs = (probabilities * 100).tolist()[0]
-
-    class_labels = [str(i) for i in range(num_labels)]
-
-    class_percentage_dict = {label: percentage for label,
-                             percentage in zip(class_labels, percentage_probs)}
-
-    for label, percentage in class_percentage_dict.items():
-        print(f"Class {label}: {percentage:.2f}%")
-
-    return Response(class_percentage_dict)
+   pass
 
 
 @api_view(['POST'])
