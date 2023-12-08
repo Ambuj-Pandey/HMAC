@@ -1,23 +1,16 @@
 from django.shortcuts import render, HttpResponse
 from rest_framework.decorators import api_view
-from django.http import HttpResponseRedirect
-from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
-from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate, login
-from rest_framework.authentication import SessionAuthentication
-from django.contrib.auth import logout
 from rest_framework_simplejwt.tokens import RefreshToken
 from django.db.models import Max
 
 
 # import models
-from .models import User
-from .models import FileModel, FileComparisonModel
+from .models import FileModel, FileComparisonModel, AIDetection
 
 # import serializers
-from .serializers import UserSerializer, FileSerializer
+from .serializers import FileSerializer, AIDetectionSerializer
 
 @api_view(['POST'])
 def upload_file(request):
@@ -80,11 +73,15 @@ def list_files_for_teacher(request):
 
     return Response(response_data)
 
-
 @api_view(['POST', 'GET'])
 def AIContentDectection(request):
-   pass
+    # Query all records from the AIDetection model
+    detection_records = AIDetection.objects.all()
 
+    # Serialize the queryset
+    serializer = AIDetectionSerializer(detection_records, many=True)
+
+    return Response(serializer.data)
 
 @api_view(['POST'])
 def login_view(request):

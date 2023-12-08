@@ -1,8 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from base.models import User
-from .models import FileModel
-from .models import FileComparisonModel
+from .models import FileModel, FileComparisonModel, AIDetection
 from django.contrib.auth import authenticate
 
 
@@ -59,3 +58,13 @@ class FileComparisonSerializer(serializers.ModelSerializer):
     class Meta:
         model = FileComparisonModel
         fields = ('uploaded_file', 'other_file', 'similarity_result')
+
+class AIDetectionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AIDetection
+        fields = ['id', 'uploaded_by', 'detection_results_Human', 'detection_results_AI']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['uploaded_by'] = instance.uploaded_by.email  # Assuming 'username' is a field in your User model
+        return representation
