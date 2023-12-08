@@ -65,7 +65,7 @@ def convert_pdf_to_image(sender, instance, created, **kwargs):
 @receiver(post_save, sender =FileImage)
 def create_ai_detection(sender, instance, created, **kwargs):
     if created:
-        model_path = 'model'
+        model_path = 'C:/Users/Nandini/Documents/GitHub/HMAC/API/new-model'
         tokenizer = DistilBertTokenizer.from_pretrained("distilbert-base-uncased")
         num_labels = 2
         Bert_Model = DistilBertForSequenceClassification.from_pretrained(
@@ -79,8 +79,12 @@ def create_ai_detection(sender, instance, created, **kwargs):
         print("Type of 'detections':", type(lines))
 
         text = ocrHelperFunc(lines)
+
+        ogtext = GrammarChecker(text)
+        print("----------------------------------------------------------------------------")
+        print("this is the Original Text: ", ogtext)
     
-        inputs = tokenizer(text, return_tensors="pt")
+        inputs = tokenizer(ogtext, return_tensors="pt")
 
         input_ids = inputs["input_ids"]
         attention_mask = inputs["attention_mask"]
@@ -114,3 +118,49 @@ def create_ai_detection(sender, instance, created, **kwargs):
             # You can set initial values for detection_results_Human and detection_results_AI here if needed
         )
         ai_detection.save()
+
+# def GrammarChecker(text):
+#     import requests
+
+#     try:
+#         response = requests.post(
+#             "https://api.sapling.ai/api/v1/edits",
+#             json={
+#                 "key": 'LD3LOLBH5FREW9BN6F8KR48AQLMV6D4X',
+#                 "text": text,
+#                 "session_id": 'test session'
+#             }
+#         )
+#         resp_json = response.json()
+#         if 200 <= response.status_code < 300:
+#             edits = resp_json['edits']
+
+#             # Apply corrections to the input text
+#             corrected_text = text
+#             for edit in reversed(edits):
+#                 start = edit['start']
+#                 end = edit['end']
+#                 replacement = edit['replacement']
+#                 corrected_text = corrected_text[:start] + replacement + corrected_text[end:]
+
+#             return corrected_text
+
+#         else:
+#             print('Error: ', resp_json)
+#             # Return the original text if there is an error
+#             return text
+
+#     except Exception as e:
+#         print('Error: ', e)
+#         # Return the original text if there is an exception
+#         return text
+
+def GrammarChecker(text):
+    import language_tool_python
+    tool = language_tool_python.LanguageTool('en-US')
+    is_bad_rule = lambda rule: rule.message == 'Possible spelling mistake found.' and len(rule.replacements) and rule.replacements[0][0].isupper()
+    matches = tool.check(text)
+    matches = [rule for rule in matches if not is_bad_rule(rule)]
+    newtext = language_tool_python.utils.correct(text, matches)
+  
+    return newtext
