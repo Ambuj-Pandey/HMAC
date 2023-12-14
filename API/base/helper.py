@@ -1,8 +1,6 @@
 from roboflow import Roboflow
 import cv2
 
-
-
 def roboflowHelperFunc(instance):
     rf = Roboflow(api_key="pkTvzHUBUJW9XbfPJuU6")
     project = rf.workspace().project("word_detection-mtq4b")

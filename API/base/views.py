@@ -7,10 +7,11 @@ from django.db.models import Max
 
 
 # import models
-from .models import FileModel, FileComparisonModel, AIDetection
+from .models import FileModel, FileComparisonModel, AIDetection, TxtFileModel
 
 # import serializers
 from .serializers import FileSerializer, AIDetectionSerializer
+
 
 @api_view(['POST'])
 def upload_file(request):
@@ -26,13 +27,13 @@ def upload_file(request):
 def list_files_for_teacher(request):
     serializer = None
     # if request.user.is_staff:   #isko baadmai karte
-    files = FileModel.objects.all()
+    files = TxtFileModel.objects.all()
     max_similarities = {}
     other_file_info = {}
 
-    # Calculate the maximum similarity for each file
+    # Calculating the maximum similarity for each file
     for file in files:
-        # Use an aggregation query to find the maximum similarity for this file
+        # Using an aggregation query to find the maximum similarity for this file
         max_similarity = FileComparisonModel.objects.filter(uploaded_file=file).aggregate(
             Max('similarity_result'))['similarity_result__max']
 
@@ -41,7 +42,7 @@ def list_files_for_teacher(request):
 
         other_file_info[file.filename] = [f.other_file for f in similar_files]
 
-        # Add the max_similarity to the dictionary with the file's name as the key
+        # Adding the max_similarity to the dictionary with the file's name as the key
         # Default to 0.0 if no max_similarity found
         max_similarities[file.filename] = float(
             str(max_similarity*100)[:6]) if max_similarity is not None else 0.0
@@ -73,6 +74,7 @@ def list_files_for_teacher(request):
 
     return Response(response_data)
 
+
 @api_view(['POST', 'GET'])
 def AIContentDectection(request):
     # Query all records from the AIDetection model
@@ -82,6 +84,7 @@ def AIContentDectection(request):
     serializer = AIDetectionSerializer(detection_records, many=True)
 
     return Response(serializer.data)
+
 
 @api_view(['POST'])
 def login_view(request):
@@ -114,34 +117,38 @@ def login_view(request):
 def getRoutes(request):
     routes = [
         {
-            'Endpoint': '/users/',
+            'Endpoint': '/',
             'method': 'GET',
             'body': None,
-            'description': 'Returns an array of users'
+            'description': 'Returns available endpoints'
         },
         {
-            'Endpoint': '/users/id',
-            'method': 'GET',
-            'body': None,
-            'description': 'Returns a single user object'
-        },
-        {
-            'Endpoint': '/users/create/',
+            'Endpoint': '/login/',
             'method': 'POST',
-            'body': {'body': ""},
-            'description': 'Creates new user with data sent in post request'
+            'body': {'username': 'your_username', 'password': 'your_password'},
+            'description': 'User login'
         },
         {
-            'Endpoint': '/users/id/update/',
-            'method': 'PUT',
-            'body': {'body': ""},
-            'description': 'Updates an existing user with data sent in post request'
+            'Endpoint': '/Upload/',
+            'method': 'POST',
+            'body': {'file': 'your_file'},
+            'description': 'Upload a file'
         },
         {
-            'Endpoint': '/users/id/delete/',
-            'method': 'DELETE',
+            'Endpoint': '/teacher/files/',
+            'method': 'GET',
             'body': None,
-            'description': 'Deletes an exiting user'
+            'description': 'List files for teacher'
+        },
+        {
+            'Endpoint': '/aidetection/',
+            'method': ['GET', 'POST'],
+            'body': {
+                'uploaded_by': "test@test.com",  
+                'detection_results_Human': "38%",
+                'detection_results_AI': "62%"
+            },
+            'description': 'AI Content Detection'
         },
     ]
 
