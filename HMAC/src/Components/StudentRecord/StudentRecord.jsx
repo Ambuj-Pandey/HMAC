@@ -6,8 +6,6 @@ import SlidingIndicator from "../AIGeneratedContent/AIGeneratedContent";
 
 const StudentRecord = () => {
     const [data, setData] = useState([]);
-    const [Aidata, setAiData] = useState([]);
-    const [maxSimilarities, setMaxSimilarities] = useState({});
 
     useEffect(() => {
         const fetchStudentRecords = async () => {
@@ -18,28 +16,7 @@ const StudentRecord = () => {
 
                 if (response.status === 200) {
                     setData(response.data.file_data);
-                    setMaxSimilarities(response.data.max_similarities);
-                } else {
-                    console.error('Error fetching data:', response.statusText);
-                }
-            } catch (error) {
-                console.error('Network error:', error);
-            }
-        };
-
-        fetchStudentRecords();
-    }, []); 
-
-    useEffect(() => {
-        const fetchStudentRecords = async () => {
-            try {
-                const response = await axios.get('http://localhost:8000/api/v1/aidetection/');
-
-                console.log(response.data);
-
-                if (response.status === 200) {
-                    setAiData(response.data);
-                    console.log(Aidata);
+                   
                 } else {
                     console.error('Error fetching data:', response.statusText);
                 }

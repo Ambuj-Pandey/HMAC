@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse
+
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.contrib.auth import authenticate, login
@@ -120,44 +120,3 @@ def login_view(request):
     else:
         return Response({"error": "Login failed"}, status=400)
 
-
-@api_view(['GET'])
-def getRoutes(request):
-    routes = [
-        {
-            'Endpoint': '/',
-            'method': 'GET',
-            'body': None,
-            'description': 'Returns available endpoints'
-        },
-        {
-            'Endpoint': '/login/',
-            'method': 'POST',
-            'body': {'username': 'your_username', 'password': 'your_password'},
-            'description': 'User login'
-        },
-        {
-            'Endpoint': '/Upload/',
-            'method': 'POST',
-            'body': {'file': 'your_file'},
-            'description': 'Upload a file'
-        },
-        {
-            'Endpoint': '/teacher/files/',
-            'method': 'GET',
-            'body': None,
-            'description': 'List files for teacher'
-        },
-        {
-            'Endpoint': '/aidetection/',
-            'method': ['GET', 'POST'],
-            'body': {
-                'uploaded_by': "test@test.com",  
-                'detection_results_Human': "38%",
-                'detection_results_AI': "62%"
-            },
-            'description': 'AI Content Detection'
-        },
-    ]
-
-    return Response(routes)
