@@ -30,6 +30,7 @@ def list_files_for_teacher(request):
     files = TxtFileModel.objects.all()
     max_similarities = {}
     other_file_info = {}
+    aidetection_results = {}
 
     # Calculating the maximum similarity for each file
     for file in files:
@@ -46,6 +47,11 @@ def list_files_for_teacher(request):
         # Default to 0.0 if no max_similarity found
         max_similarities[file.filename] = float(
             str(max_similarity*100)[:6]) if max_similarity is not None else 0.0
+        
+        user_aidetection_results = AIDetection.objects.filter(
+            uploaded_by=file.uploaded_by)
+        
+        aidetection_results[file.filename] = user_aidetection_results
 
     serializer = FileSerializer(files, many=True)
 
@@ -59,12 +65,14 @@ def list_files_for_teacher(request):
             f).data for f in other_file_info.get(filename, None)]
         other_file_names = [f['filename'] for f in other_files]
 
+        user_aidetection_results = aidetection_results.get(filename, None)
+
         file_data.append({
             **file,
             'max_similarity': max_similarity,
-            'uploaded_by_info': uploader_info,
             'other_files_with_max_similarity': other_files,
-            'other_file_names': other_file_names
+            'other_file_names': other_file_names,
+            'user_aidetection_results': AIDetectionSerializer(user_aidetection_results, many=True).data if user_aidetection_results else []
         })
         print(other_file_names)
 

@@ -16,7 +16,6 @@ from transformers import DistilBertTokenizer, DistilBertForSequenceClassificatio
 import concurrent.futures
 
 COVER_PAGE_DIRECTORY = 'coverdirectory/'
-# PDF_DIRECTORY = 'pdfdirectory/'
 COVER_PAGE_FORMAT = 'jpg'
 
 @receiver(post_save, sender=FileModel)
@@ -122,6 +121,8 @@ def create_ai_detection(sender, instance, created, **kwargs):
 
         ai_detection = AIDetection(
             uploaded_by=instance.uploaded_by,
+            image=instance,
+            filename=instance.filename,
             detection_results_Human=detection_results_Human,
             detection_results_AI=detection_results_AI,
         )
