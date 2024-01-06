@@ -119,9 +119,7 @@ class TxtFileModel(models.Model):
             return ""
 
     def save(self, *args, **kwargs):
-        # Assign a default user if 'uploaded_by' is not set
         if not self.uploaded_by:
-            # Replace with the actual default user
             self.uploaded_by = User.objects.get(Email='a@a.com')
         super().save(*args, **kwargs)
 
