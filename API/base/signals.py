@@ -88,7 +88,52 @@ def create_ai_detection(sender, instance, created, **kwargs):
 
         text = ocrHelperFunc(lines)
 
+        import Levenshtein
+
+        def calculate_cer(reference, hypothesis):
+            distance = Levenshtein.distance(reference, hypothesis)
+            cer = distance / len(reference)
+            return cer * 100
+
+        def calculate_wer(reference, hypothesis):
+            reference_words = reference.split()
+            hypothesis_words = hypothesis.split()
+
+            distance = Levenshtein.distance(reference_words, hypothesis_words)
+            wer = distance / len(reference_words)
+            return wer * 100
+
+        def calculate_cra(reference, hypothesis):
+            correct_characters = sum(r == h for r, h in zip(reference, hypothesis))
+            cra = correct_characters / len(reference)
+            return cra * 100
+
+        def calculate_wra(reference, hypothesis):
+            reference_words = reference.split()
+            hypothesis_words = hypothesis.split()
+
+            correct_words = sum(r == h for r, h in zip(reference_words, hypothesis_words))
+            wra = correct_words / len(reference_words)
+            return wra * 100
+
+        # Example usage:
+        reference_text = '''One sunny day, Wishers decided to go on an adventure. They all decided to explore the mysterious forest at the edge of the town. With the sun casting warm rays, wishers, the adventurous cat gathered his friends. Under the green canopy of the mysterious forest, Wishers and his friends ventured forth with excitement in their hearts. The air was filled with the sweet scent of blooming flowers, and the rustle of leaves added a rhythm to their journey. As they delved deeper into the woodland, they encountered a babbling brook, its crystal-clear waters inviting them to take a refreshing pause. Wishers, the adventurous cat, with his sleek fur, approached the water's edge. He dipped his paw into the cool stream, sending ripples across its surface. Wishers said , "Come on, everyone! Let's follow the path beside the stream. I have a feeling it will lead us to something magical," Wishers exclaimed, his eyes sparkling with anticipation.'''
+        hypothesis_text = text
+
+        cer = calculate_cer(reference_text, hypothesis_text)
+        wer = calculate_wer(reference_text, hypothesis_text)
+        cra = calculate_cra(reference_text, hypothesis_text)
+        wra = calculate_wra(reference_text, hypothesis_text)
+
+        print(f"CRA: {cra:.2f}%")
+        print(f"WRA: {wra:.2f}%")
+
+        print(f"CER: {cer:.2f}%")
+        print(f"WER: {wer:.2f}%")
+
         ogtext = GrammarChecker(text)
+
+        # print("OG text:", ogtext)
         
         newText = ogtext.replace(' ', ',')
         newText = newText.replace('\n', ',')
@@ -107,8 +152,6 @@ def create_ai_detection(sender, instance, created, **kwargs):
                 filtered_sentence += ' ' + w
                 
         newText = filtered_sentence
-
-   
 
         inputs = tokenizer(ogtext, return_tensors="pt")
 

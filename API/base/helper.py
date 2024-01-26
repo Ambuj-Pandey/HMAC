@@ -58,13 +58,12 @@ def roboflowHelperFunc(instance):
     for i, word_image in enumerate(word_images):
         cv2.imwrite(f"C:/Users/Nandini/Documents/GitHub/HMAC/API/OCR/testing/words_{i+1}.jpg", word_image)
 
+    box_dimensions = sorted(box_dimensions, key=lambda box: (box["y"]))
+
     line_count = 1
     lines = []
     current_line = [box_dimensions[0]]
-    threshold = 10
-
-    # Sort boxes by y-value
-    box_dimensions = sorted(box_dimensions, key=lambda box: (box["y"]))
+    threshold = 20
 
     # Count lines and words based on y-value and threshold
     for i in range(1, len(box_dimensions)):
@@ -87,7 +86,7 @@ def roboflowHelperFunc(instance):
 
     return lines
 
-def hconcat_resize_batch(img_list, batch_size=10, interpolation=cv2.INTER_CUBIC):
+def hconcat_resize_batch(img_list, batch_size, interpolation=cv2.INTER_CUBIC):
     result_images = []
 
     for i in range(0, len(img_list), batch_size):
@@ -112,7 +111,6 @@ def ocrHelperFunc(lines):
     sorted_lines = lines
 
     image_paths = [f"C:/Users/Nandini/Documents/GitHub/HMAC/API/OCR/{folder_name}/words_{line['index']}.jpg" for line in sorted_lines]
-
 
     images = [cv2.imread(img_path) for img_path in image_paths]
 
