@@ -69,7 +69,7 @@ const LoginPage = () => {
 
     try {
       const response = await axios.post(
-        "http://127.0.0.1:8000/login/",
+        "http://127.0.0.1:8000/api/v1/login/",
         user,
         { withCredentials: true } // Include credentials
       );

@@ -5,9 +5,8 @@ const SlidingIndicator = ({value}) => {
   const [responseRate, setResponseRate] = useState(1); // Set an initial non-zero value
 
   useEffect(() => {
-    // Set the initial random value when the component mounts
     setResponseRate(value);
-  }, []); // Empty dependency array to run this effect only once
+  }, []); 
   
   const animationWidth = `${Math.min(responseRate, 100)}%`;
 

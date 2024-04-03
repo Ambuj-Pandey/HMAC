@@ -50,21 +50,21 @@ const Navbar = ({ goTo, toggleSummary = "false" }) => {
             <a href="#">Upload</a>
           </li>
           <li className="listitem">
-            <a href="#">something/remove</a>
+            {/* <a href="#">something/remove</a> */}
           </li>
           <li className="listitem">
             <a href="#">How to Use</a>
           </li>
           <li className="listitem">
-            <a href="#">Contact</a>
+            {/* <a href="#">Contact</a> */}
           </li>
-          <li className="listitem">
+          {/* <li className="listitem">
             {goTo === "Professor" ? (
               <Link to="/Professor">{goTo}</Link>
             ) : (
               <Link to="/Student">{goTo}</Link>
             )}
-          </li>
+          </li> */}
 
           {toggleSummary == "false" ? null : (
             <li className="listitem">

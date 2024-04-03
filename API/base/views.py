@@ -100,7 +100,6 @@ def login_view(request):
     password = request.data.get('password')
 
     user = authenticate(request, email=email, password=password)
-    print(user.is_staff)
     if user is not None:
         login(request, user)
         refresh = RefreshToken.for_user(user)
@@ -119,4 +118,3 @@ def login_view(request):
         return response
     else:
         return Response({"error": "Login failed"}, status=400)
-
