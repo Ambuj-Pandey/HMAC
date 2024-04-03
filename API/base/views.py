@@ -7,7 +7,7 @@ from django.db.models import Max
 
 
 # import models
-from .models import FileModel, FileComparisonModel, AIDetection, TxtFileModel
+from .models import FileModel, FileComparisonModel, AIDetection, TxtFileModel, User, OcrResult
 
 # import serializers
 from .serializers import FileSerializer, AIDetectionSerializer
@@ -118,3 +118,13 @@ def login_view(request):
         return response
     else:
         return Response({"error": "Login failed"}, status=400)
+    
+def ocr_Results(request, pk):
+    ocr_result = OcrResult.objects.get(uploaded_by__user_id = pk)
+    uploaded_by_user_id = ocr_result.uploaded_by.user_id
+    print(uploaded_by_user_id)
+    
+
+
+
+
