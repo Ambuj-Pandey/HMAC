@@ -137,8 +137,6 @@ def create_ai_detection(sender, instance, created, **kwargs):
 
         ogtext = GrammarChecker(text)
 
-
-
         # print("OG text:", ogtext)
 
         newText = ogtext.replace(' ', ',')

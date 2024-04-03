@@ -1,11 +1,9 @@
-/* Login.css */
 .login-container {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
   background-color: #502abd;
-  /* Background color matching your theme */
 }
 
 .login-box {
@@ -19,7 +17,6 @@
 
 h2 {
   color: #502abd;
-  /* Text color matching your theme */
 }
 
 .inputBox {
@@ -107,18 +104,20 @@ h2 {
 .message Link:hover {
   text-decoration: underline;
 }
+
 @media screen and (max-width: 720px) {
-.login-box{
-  height: 40vh;
-  width: 40vw;
-  min-height: 35vh;
-  min-width: 190px;
-}
-.inputBox {
-  position: relative;
-  width: 36vw;
-  min-width: 165px;
-  margin-top: 10%;
-}
-  
+  .login-box {
+    height: 40vh;
+    width: 40vw;
+    min-height: 35vh;
+    min-width: 190px;
+  }
+
+  .inputBox {
+    position: relative;
+    width: 36vw;
+    min-width: 165px;
+    margin-top: 10%;
+  }
+
 }

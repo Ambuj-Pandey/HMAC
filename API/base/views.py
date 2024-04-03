@@ -47,10 +47,10 @@ def list_files_for_teacher(request):
         # Default to 0.0 if no max_similarity found
         max_similarities[file.filename] = float(
             str(max_similarity*100)[:6]) if max_similarity is not None else 0.0
-        
+
         user_aidetection_results = AIDetection.objects.filter(
             uploaded_by=file.uploaded_by)
-        
+
         aidetection_results[file.filename] = user_aidetection_results
 
     serializer = FileSerializer(files, many=True)
@@ -118,13 +118,9 @@ def login_view(request):
         return response
     else:
         return Response({"error": "Login failed"}, status=400)
-    
+
+
 def ocr_Results(request, pk):
-    ocr_result = OcrResult.objects.get(uploaded_by__user_id = pk)
+    ocr_result = OcrResult.objects.get(uploaded_by__user_id=pk)
     uploaded_by_user_id = ocr_result.uploaded_by.user_id
     print(uploaded_by_user_id)
-    
-
-
-
-

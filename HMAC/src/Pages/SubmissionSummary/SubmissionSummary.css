@@ -1,9 +1,10 @@
-.submission-container{
+.submission-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.submission-bg-container{
+
+.submission-bg-container {
     margin-top: 250px;
     font-size: xx-large;
     padding: 30px;
@@ -11,8 +12,9 @@
     height: fit-content;
     background-color: #e6e6e6;
     border-radius: 5px;
-  
+
 }
+
 .submission-column-header {
     list-style-type: none;
     display: flex;
@@ -23,21 +25,24 @@
     padding: 10px;
     align-items: center;
     gap: 10px;
-    
+
 }
-.rollH{
+
+.rollH {
     width: 6vw;
     text-align: center;
     padding: 5px;
 }
-.nameH{
+
+.nameH {
     flex-grow: 4;
-    text-align: center; 
+    text-align: center;
     padding: 5px;
-    
+
 }
-.percentH{
+
+.percentH {
     flex-grow: 2;
-    text-align: center; 
+    text-align: center;
     padding: 5px;
 }

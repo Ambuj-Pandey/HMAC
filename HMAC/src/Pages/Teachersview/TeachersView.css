@@ -1,5 +1,4 @@
-
-.Professor-Section{
+.Professor-Section {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     align-items: center;
@@ -51,7 +50,7 @@
     background-color: #40179d;
 }
 
-.teacher-view-Right-container{
+.teacher-view-Right-container {
     position: absolute;
     top: 8rem;
     right: 250px;
@@ -105,4 +104,3 @@
     display: inline-block;
 
 }
-

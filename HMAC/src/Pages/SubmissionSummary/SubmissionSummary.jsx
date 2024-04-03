@@ -9,7 +9,7 @@ const SubmissionSummary = () => {
         <StudentRecord />
       </div>
     </div>
-  );  
+  );
 };
 
 export default SubmissionSummary;

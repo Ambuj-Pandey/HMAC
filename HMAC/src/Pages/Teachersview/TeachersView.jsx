@@ -16,8 +16,8 @@ const TeachersView = () => {
   }, []);
   return (
     <>
-      <Navbar goTo="Student" toggleSummary={"true"}/>
-     
+      <Navbar goTo="Student" toggleSummary={"true"} />
+
       <div className="Professor-Section">
         <div data-aos="fade-right" className="teacher-view-Left-container">
           <div className="teacher-view">
@@ -46,8 +46,7 @@ const TeachersView = () => {
               </p>
             </div>
 
-            <SlidingIndicator
-             value={50} />
+            <SlidingIndicator value={50} />
 
             <DuplicateDetection />
           </div>

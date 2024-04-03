@@ -11,7 +11,6 @@ const RegistrationPage = () => {
         <h2>Register</h2>
 
         <form>
-
           <InputWithLabel
             type="text"
             id="fullName"
@@ -35,7 +34,7 @@ const RegistrationPage = () => {
             label="Password"
             required
           />
-          
+
           <InputWithLabel
             type="password"
             id="confirmPassword"
