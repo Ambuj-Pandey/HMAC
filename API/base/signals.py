@@ -19,6 +19,7 @@ import concurrent.futures
 COVER_PAGE_DIRECTORY = 'coverdirectory/'
 COVER_PAGE_FORMAT = 'jpg'
 
+
 @receiver(post_save, sender=FileModel)
 def convert_pdf_to_image(sender, instance, created, **kwargs):
     if created:
@@ -69,6 +70,7 @@ def convert_pdf_to_image(sender, instance, created, **kwargs):
         # call save on the model instance to update database record
         instance.save()
 
+
 @receiver(post_save, sender=FileImage)
 def create_ai_detection(sender, instance, created, **kwargs):
     if created:
@@ -104,7 +106,8 @@ def create_ai_detection(sender, instance, created, **kwargs):
             return wer * 100
 
         def calculate_cra(reference, hypothesis):
-            correct_characters = sum(r == h for r, h in zip(reference, hypothesis))
+            correct_characters = sum(
+                r == h for r, h in zip(reference, hypothesis))
             cra = correct_characters / len(reference)
             return cra * 100
 
@@ -112,12 +115,13 @@ def create_ai_detection(sender, instance, created, **kwargs):
             reference_words = reference.split()
             hypothesis_words = hypothesis.split()
 
-            correct_words = sum(r == h for r, h in zip(reference_words, hypothesis_words))
+            correct_words = sum(r == h for r, h in zip(
+                reference_words, hypothesis_words))
             wra = correct_words / len(reference_words)
             return wra * 100
 
         # Example usage:
-        reference_text = '''One sunny day, Wishers decided to go on an adventure. They all decided to explore the mysterious forest at the edge of the town. With the sun casting warm rays, wishers, the adventurous cat gathered his friends. Under the green canopy of the mysterious forest, Wishers and his friends ventured forth with excitement in their hearts. The air was filled with the sweet scent of blooming flowers, and the rustle of leaves added a rhythm to their journey. As they delved deeper into the woodland, they encountered a babbling brook, its crystal-clear waters inviting them to take a refreshing pause. Wishers, the adventurous cat, with his sleek fur, approached the water's edge. He dipped his paw into the cool stream, sending ripples across its surface. Wishers said , "Come on, everyone! Let's follow the path beside the stream. I have a feeling it will lead us to something magical," Wishers exclaimed, his eyes sparkling with anticipation.'''
+        reference_text = '''One sunny day, Wishers decided to go on an adventure. They all decided to explore the mysterious forest at the edge of the town. With the sun casting warm rays, wishers, the adventurous cat gathered his friends. Under the green canopy of the mysterious forest, Wishers and his friends ventured forth with excitement in their hearts. The air was filled with the sweet scent of blooming flowers, and the rustle of leaves added a rhythm to their journey. As they delved deeper into the woodland, they encountered a babbling brook, its crystal-clear waters inviting them to take a refreshing pause. '''
         hypothesis_text = text
 
         cer = calculate_cer(reference_text, hypothesis_text)
@@ -125,32 +129,33 @@ def create_ai_detection(sender, instance, created, **kwargs):
         cra = calculate_cra(reference_text, hypothesis_text)
         wra = calculate_wra(reference_text, hypothesis_text)
 
-        print(f"CRA: {cra:.2f}%")
-        print(f"WRA: {wra:.2f}%")
+        # print(f"CRA: {cra:.2f}%")
+        # print(f"WRA: {wra:.2f}%")
 
-        print(f"CER: {cer:.2f}%")
-        print(f"WER: {wer:.2f}%")
+        # print(f"CER: {cer:.2f}%")
+        # print(f"WER: {wer:.2f}%")
 
         ogtext = GrammarChecker(text)
 
         # print("OG text:", ogtext)
-        
+
         newText = ogtext.replace(' ', ',')
         newText = newText.replace('\n', ',')
         newText = newText.replace(',,', ',')
 
-        stop_words = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', "she's", 'her', 'hers', 'herself', 'it', "it's", 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', "that'll", 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up', 'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', "don't", 'should', "should've", 'now', 'd', 'll', 'm', 'o', 're', 've', 'y', 'ain', 'aren', "aren't", 'couldn', "couldn't", 'didn', "didn't", 'doesn', "doesn't", 'hadn', "hadn't", 'hasn', "hasn't", 'haven', "haven't", 'isn', "isn't", 'ma', 'mightn', "mightn't", 'mustn', "mustn't", 'needn', "needn't", 'shan', "shan't", 'shouldn', "shouldn't", 'wasn', "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't"]
-        
-        #removes punctuations 
+        stop_words = ['i', 'me', 'my', 'myself', 'we', 'our', 'ours', 'ourselves', 'you', "you're", "you've", "you'll", "you'd", 'your', 'yours', 'yourself', 'yourselves', 'he', 'him', 'his', 'himself', 'she', "she's", 'her', 'hers', 'herself', 'it', "it's", 'its', 'itself', 'they', 'them', 'their', 'theirs', 'themselves', 'what', 'which', 'who', 'whom', 'this', 'that', "that'll", 'these', 'those', 'am', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'having', 'do', 'does', 'did', 'doing', 'a', 'an', 'the', 'and', 'but', 'if', 'or', 'because', 'as', 'until', 'while', 'of', 'at', 'by', 'for', 'with', 'about', 'against', 'between', 'into', 'through', 'during', 'before', 'after', 'above', 'below', 'to', 'from', 'up',
+                      'down', 'in', 'out', 'on', 'off', 'over', 'under', 'again', 'further', 'then', 'once', 'here', 'there', 'when', 'where', 'why', 'how', 'all', 'any', 'both', 'each', 'few', 'more', 'most', 'other', 'some', 'such', 'no', 'nor', 'not', 'only', 'own', 'same', 'so', 'than', 'too', 'very', 's', 't', 'can', 'will', 'just', 'don', "don't", 'should', "should've", 'now', 'd', 'll', 'm', 'o', 're', 've', 'y', 'ain', 'aren', "aren't", 'couldn', "couldn't", 'didn', "didn't", 'doesn', "doesn't", 'hadn', "hadn't", 'hasn', "hasn't", 'haven', "haven't", 'isn', "isn't", 'ma', 'mightn', "mightn't", 'mustn', "mustn't", 'needn', "needn't", 'shan', "shan't", 'shouldn', "shouldn't", 'wasn', "wasn't", 'weren', "weren't", 'won', "won't", 'wouldn', "wouldn't"]
+
+        # removes punctuations
         newText = gensim.utils.simple_preprocess(str(newText), deacc=True)
-               
+
         filtered_sentence = ''
-        
+
         for w in newText:
-            #loop to check stopwords in newtext and get filtered string
+            # loop to check stopwords in newtext and get filtered string
             if w not in stop_words:
                 filtered_sentence += ' ' + w
-                
+
         newText = filtered_sentence
 
         inputs = tokenizer(ogtext, return_tensors="pt")
@@ -202,6 +207,7 @@ def create_ai_detection(sender, instance, created, **kwargs):
 
         txt_file_model.save()
 
+
 def GrammarChecker(text):
     import language_tool_python
     tool = language_tool_python.LanguageTool('en-US')
@@ -212,6 +218,7 @@ def GrammarChecker(text):
     newtext = language_tool_python.utils.correct(text, matches)
 
     return newtext
+
 
 def compare_uploaded_file_with_database(uploaded_file_content, uploaded_file_data, file_model_list):
     comparisons = []  # To store comparison results before saving
@@ -244,6 +251,7 @@ def compare_uploaded_file_with_database(uploaded_file_content, uploaded_file_dat
 
     FileComparisonModel.objects.bulk_create(
         [FileComparisonModel(**data) for data in comparisons])
+
 
 @receiver(post_save, sender=TxtFileModel)
 def calculate_similarity_on_upload(sender, instance, created, **kwargs):
