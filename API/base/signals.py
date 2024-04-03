@@ -6,7 +6,7 @@ from django.core.files.base import ContentFile
 import os
 from pdf2image import convert_from_path
 
-from .models import FileModel, FileImage, AIDetection, TxtFileModel, FileComparisonModel, User, FileModel, TxtFileModel
+from .models import FileModel, FileImage, AIDetection, TxtFileModel, FileComparisonModel, User, FileModel, TxtFileModel, OcrResult
 from .helper import roboflowHelperFunc, ocrHelperFunc, makeDir
 from .comparison import compare_file_similarity
 
@@ -86,7 +86,7 @@ def create_ai_detection(sender, instance, created, **kwargs):
 
         lines = roboflowHelperFunc(instance)
 
-        print("Type of 'detections':", type(lines))
+        # print("Type of 'detections':", type(lines))
 
         text = ocrHelperFunc(lines)
 
@@ -136,6 +136,8 @@ def create_ai_detection(sender, instance, created, **kwargs):
         # print(f"WER: {wer:.2f}%")
 
         ogtext = GrammarChecker(text)
+
+
 
         # print("OG text:", ogtext)
 
@@ -192,6 +194,13 @@ def create_ai_detection(sender, instance, created, **kwargs):
             detection_results_AI=detection_results_AI,
         )
         ai_detection.save()
+
+        ocr_result = OcrResult(
+            uploaded_by=instance.uploaded_by,
+            filename=instance.filename,
+            ocr_results=text,
+        )
+        ocr_result.save()
 
         # create txt file
         txt_content = newText

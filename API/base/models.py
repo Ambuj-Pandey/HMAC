@@ -136,3 +136,10 @@ class FileComparisonModel(models.Model):
     def __str__(self):
         return f"Comparison between {self.uploaded_file.filename} and {self.other_file.filename}"
 
+class OcrResult(models.Model):
+    uploaded_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    filename = models.CharField(max_length=255)
+    ocr_results = models.TextField()
+
+    def __str__(self):
+        return f"OCR Result of {self.uploaded_by} is {self.ocr_results}"

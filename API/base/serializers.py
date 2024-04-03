@@ -1,7 +1,7 @@
 from rest_framework.serializers import ModelSerializer
 from rest_framework import serializers
 from base.models import User
-from .models import FileModel, FileComparisonModel, AIDetection
+from .models import FileModel, FileComparisonModel, AIDetection, OcrResult
 from django.contrib.auth import authenticate
 
 
@@ -67,4 +67,15 @@ class AIDetectionSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         representation = super().to_representation(instance)
         representation['uploaded_by'] = instance.uploaded_by.email  # Assuming 'username' is a field in your User model
+        return representation
+    
+
+class OcrResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OcrResult
+        fields = ['id', 'uploaded_by', 'ocr_results']
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        representation['uploaded_by'] = instance.uploaded_by.email  
         return representation
