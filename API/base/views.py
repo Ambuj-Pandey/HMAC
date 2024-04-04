@@ -10,7 +10,7 @@ from django.db.models import Max
 from .models import FileModel, FileComparisonModel, AIDetection, TxtFileModel, User, OcrResult
 
 # import serializers
-from .serializers import FileSerializer, AIDetectionSerializer
+from .serializers import FileSerializer, AIDetectionSerializer, OcrResultSerializer
 
 
 @api_view(['POST'])
@@ -123,4 +123,8 @@ def login_view(request):
 def ocr_Results(request, pk):
     ocr_result = OcrResult.objects.get(uploaded_by__user_id=pk)
     uploaded_by_user_id = ocr_result.uploaded_by.user_id
+
+    serializer = OcrResultSerializer(ocr_result)
     print(uploaded_by_user_id)
+    return Response(serializer.data)
+   
