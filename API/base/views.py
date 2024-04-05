@@ -119,7 +119,7 @@ def login_view(request):
     else:
         return Response({"error": "Login failed"}, status=400)
 
-
+@api_view(['GET'])
 def ocr_Results(request, pk):
     ocr_result = OcrResult.objects.get(uploaded_by__user_id=pk)
     uploaded_by_user_id = ocr_result.uploaded_by.user_id

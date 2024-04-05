@@ -6,8 +6,8 @@ import TeachersView from "./Pages/Teachersview/TeachersView";
 import LoginPage from "./Pages/LoginPage/LoginPage";
 import RegistrationPage from "./Pages/RegistrationPage/RegistrationPage";
 import SubmissionSummary from "./Pages/SubmissionSummary/SubmissionSummary";
-
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import OcrResultPage from "./Pages/OcrResultPage/OcrResultPage";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
@@ -18,6 +18,7 @@ function App() {
         <Route path="/Student" element={<Student />}></Route>
         <Route path="/Professor" element={<TeachersView />}></Route>
         <Route path="/Summary" element={<SubmissionSummary />}></Route>
+        <Route path="/OcrResult/:id" element={<OcrResultPage/> }></Route>
       </Routes>
     </Router>
   );

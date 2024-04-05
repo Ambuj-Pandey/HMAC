@@ -4,6 +4,8 @@ import "./StudentRecord.css";
 
 import SlidingIndicator from "../AIGeneratedContent/AIGeneratedContent";
 
+import { Link } from "react-router-dom";
+
 const StudentRecord = () => {
   const [data, setData] = useState([]);
 
@@ -47,7 +49,7 @@ const StudentRecord = () => {
               key={item.id}
               className={index % 2 === 0 ? "even-row" : "odd-row"}
             >
-              <td>{item.uploaded_by.email}</td>
+              <td> <Link to={`/OcrResult/${item.uploaded_by.user_id}`}>{item.uploaded_by.email}</Link></td>
               <td>{item.filename}</td>
               <td>
                 <SlidingIndicator className="ai-detection-indicator" 
