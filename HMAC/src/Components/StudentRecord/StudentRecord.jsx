@@ -31,6 +31,11 @@ const StudentRecord = () => {
     fetchStudentRecords();
   }, []);
 
+  const cropFilename = (filename) => {
+    const index = filename.indexOf('.');
+    return index !== -1 ? filename.substring(0, index) : filename;
+  };
+
   return (
     <div className="table-container">
       <table>
@@ -49,8 +54,8 @@ const StudentRecord = () => {
               key={item.id}
               className={index % 2 === 0 ? "even-row" : "odd-row"}
             >
-              <td> <Link to={`/OcrResult/${item.uploaded_by.user_id}`}>{item.uploaded_by.email}</Link></td>
-              <td>{item.filename}</td>
+              <td> <Link to={`/OcrResult/${item.uploaded_by.user_id}`}>{item.uploaded_by.username}</Link></td>
+              <td>{cropFilename(item.filename)}</td>
               <td>
                 <SlidingIndicator className="ai-detection-indicator" 
                   value={item.user_aidetection_results[0].detection_results_AI.toFixed(
@@ -62,7 +67,9 @@ const StudentRecord = () => {
                 <SlidingIndicator value={item.max_similarity} />
               </td>
 
-              <td>{item.other_file_names}</td>
+              <td> {item.other_file_names.map((otherFileName) => (
+                  <div key={otherFileName}>{cropFilename(otherFileName)}</div>
+                ))}</td>
             </tr>
           ))}
         </tbody>
